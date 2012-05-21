@@ -1,2 +1,2 @@
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/full_betelgeuse.mk
+    $(LOCAL_DIR)/full_paz00.mk
