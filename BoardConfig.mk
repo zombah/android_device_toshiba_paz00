@@ -40,18 +40,18 @@ BOARD_WEXT_NO_COMBO_SCAN	:= true
 
 BOARD_WPA_SUPPLICANT_DRIVER := WEXT
 WPA_SUPPLICANT_VERSION := VER_0_8_X
-BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_ath6kl
+#BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_ath6kl
 BOARD_HOSTAPD_DRIVER := WEXT
-BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_ath6kl
-BOARD_WLAN_DEVICE := ath6kl
-BOARD_WLAN_ATHEROS_SDK := hardware/AR6kSDK.3.1/AR6kSDK.build_3.1_RC.563
-BOARD_WLAN_CHIP_AR6003 := true
+#BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_ath6kl
+BOARD_WLAN_DEVICE := wlan0
+#BOARD_WLAN_ATHEROS_SDK := hardware/AR6kSDK.3.1/AR6kSDK.build_3.1_RC.563
+#BOARD_WLAN_CHIP_AR6003 := true
 
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
 #BOARD_HAVE_BLUETOOTH_CSR := true
 
-BOARD_KERNEL_CMDLINE := no_console_suspend=1 console=tty0,115200n8 video=tegrafb androidboot.hardware=paz00
+BOARD_KERNEL_CMDLINE := panic=10 video=tegrafb console=tty0,115200n8 no_console_suspend=1 tegraboot=sdmmc androidboot.hardware=paz00 tegrapart=recovery:300:a00:800,boot:d00:1000:800,mbr:1d00:200:800,system:1f00:25800:800,cache:27700:32000:800,misc:59700:400:800,store:59c00:9a600:800,userdata:f4300:df3500:800
 
 BOARD_KERNEL_BASE := 0x10000000
 BOARD_PAGE_SIZE := 0x00000800
