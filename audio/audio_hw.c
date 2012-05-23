@@ -38,21 +38,38 @@
 #include <hardware/audio_effect.h>
 #include <audio_effects/effect_aec.h>
 
-#define MIXER_PCM_PLAYBACK_VOLUME     		"Digital Playback Volume"
-#define MIXER_PCM_CAPTURE_VOLUME		"Digital Capture Volume"
 
-#define MIXER_SPEAKER_PLAYBACK_VOLUME		"Line Out Volume"
-#define MIXER_SPEAKER_PLAYBACK_SWITCH		"Int Spk Switch"
+// Playback
+#define MIXER_MASTER_PLAYBACK_VOLUME		"Master Playback Volume"
+#define MIXER_MASTER_PLAYBACK_SWITCH		"Master Playback Volume"
 
-#define MIXER_HEADSET_PLAYBACK_VOLUME		"Headphone Volume"
-#define MIXER_HEADSET_PLAYBACK_SWITCH		"Headphone Switch"
+#define MIXER_SPEAKER_PLAYBACK_VOLUME		"Speaker Playback Volume"
+#define MIXER_SPEAKER_PLAYBACK_SWITCH		"Speaker Playback Switch"
 
-#define MIXER_MICL_CAPTURE_VOLUME		"Left Input PGA Volume"
-#define MIXER_MICR_CAPTURE_VOLUME		"Right Input PGA Volume"
-#define MIXER_MICL_CAPTURE_SWITCH		"Left Input PGA Switch"
-#define MIXER_MICR_CAPTURE_SWITCH		"Right Input PGA Switch"
-#define MIXER_MICL_CAPTURE_MUX			"Left Capture Mux"
-#define MIXER_MICR_CAPTURE_MUX			"Right Capture Mux"
+#define MIXER_HEADSET_PLAYBACK_VOLUME		"Headphone Playback Volume"
+#define MIXER_HEADSET_PLAYBACK_SWITCH		"Headphone Playback Switch"
+
+#define MIXER_DAC2SPK_PLAYBACK_SWITCH		"Speaker Mix DAC2SPK Playback Switch"
+#define MIXER_HPL_DACL2HP_PLAYBACK_SWITCH	"HPL Mix DACL2HP Playback Switch"
+#define MIXER_HPR_DACR2HP_PLAYBACK_SWITCH	"HPR Mix DACR2HP Playback Switch"
+#define MIXER_INTERNAL_SPEAKER_SWITCH		"Int Spk Switch"
+
+#define MIXER_SPEAKER_OUT_MUX				"SpeakerOut Mux"
+#define MIXER_SPEAKER_OUT_NMUX				"SpeakerOut N Mux"
+#define MIXER_LEFT_HEADPHONE_MUX			"Left Headphone Mux"
+#define MIXER_RIGHT_HEADPHONE_MUX			"Right Headphone Mux"
+#define MIXER_ABD_AMP_MUX					"AB-D Amp Mux"
+
+// Capture
+#define MIXER_MASTER_CAPTURE_VOLUME			"Rec Capture Volume"
+#define MIXER_DMIC_BOOST_CAPTURE_VOLUME		"DMIC Boost Capture Volume"
+
+#define MIXER_DMIC_EN_CAPTURE_SWITCH		"DMIC En Capture Switch"
+#define MIXER_DMIC_PREFILTER_CAPTURE_SWITCH	"DMIC PreFilter Capture Switch"
+#define MIXER_DMICL2ADC_CAPTURE_SWITCH		"DMICL Mix DMICL2ADC Capture Switch"
+
+#define MIXER_I2S_OUT_CAPTURE_MUX			"I2SOut Mux"
+
 
 /* ALSA card */
 #define CARD_SND 0
@@ -98,11 +115,11 @@
 #define MM_FULL_POWER_SAMPLING_RATE 48000
 
 /* conversions from Percent to codec gains */
-#define PERC_TO_PCM_VOLUME(x)     ( (int)((x) * 120 ))
-#define PERC_TO_CAPTURE_VOLUME(x) ( (int)((x) * 120 ))
-#define PERC_TO_MIC_VOLUME(x) ( (int)((x) * 31 ))
-#define PERC_TO_HEADSET_VOLUME(x) ( (int)((x) * 63 ))
-#define PERC_TO_SPEAKER_VOLUME(x) ( (int)((x) * 63 ))
+#define PERC_TO_MASTER_VOLUME(x)     ( (int)((x) * 63 ))
+#define PERC_TO_HEADSET_VOLUME(x) ( (int)((x) * 31 ))
+#define PERC_TO_SPEAKER_VOLUME(x) ( (int)((x) * 31 ))
+#define PERC_TO_CAPTURE_VOLUME(x) ( (int)((x) * 31 ))
+#define PERC_TO_DMIC_BOOST_VOLUME(x) ( (int)((x) * 7 ))
 
 struct pcm_config pcm_config_mm_out = {
     .channels = 2,
@@ -129,55 +146,100 @@ struct route_setting
 
 /* These are values that never change */
 struct route_setting defaults[] = {
-    /* general */
+    /* playback */
     {
-        .ctl_name = MIXER_PCM_PLAYBACK_VOLUME,
-        .intval = PERC_TO_PCM_VOLUME(0.8),
+        .ctl_name = MIXER_MASTER_PLAYBACK_VOLUME,
+        .intval = PERC_TO_MASTER_VOLUME(0.8),
     },
     {
-	.ctl_name = MIXER_PCM_CAPTURE_VOLUME,
-	.intval = PERC_TO_CAPTURE_VOLUME(0.8),
+        .ctl_name = MIXER_MASTER_PLAYBACK_SWITCH,
+        .intval = 1,
     },
+
     {
         .ctl_name = MIXER_SPEAKER_PLAYBACK_VOLUME,
         .intval = PERC_TO_SPEAKER_VOLUME(1),
     },
     {
-	.ctl_name = MIXER_SPEAKER_PLAYBACK_SWITCH,
-	.intval = 1,
+		.ctl_name = MIXER_SPEAKER_PLAYBACK_SWITCH,
+		.intval = 1,
     },
+
     {
         .ctl_name = MIXER_HEADSET_PLAYBACK_VOLUME,
         .intval = PERC_TO_HEADSET_VOLUME(1),
     },
     {
-	.ctl_name = MIXER_HEADSET_PLAYBACK_SWITCH,
+		.ctl_name = MIXER_HEADSET_PLAYBACK_SWITCH,
+        .intval = 1,
+    },
+
+    {
+		.ctl_name = MIXER_DAC2SPK_PLAYBACK_SWITCH,
         .intval = 1,
     },
     {
-	.ctl_name = MIXER_MICL_CAPTURE_VOLUME,
-	.intval = PERC_TO_MIC_VOLUME(1),
+		.ctl_name = MIXER_HPL_DACL2HP_PLAYBACK_SWITCH,
+        .intval = 1,
     },
     {
-	.ctl_name = MIXER_MICR_CAPTURE_VOLUME,
-	.intval = PERC_TO_MIC_VOLUME(1),
+		.ctl_name = MIXER_HPR_DACR2HP_PLAYBACK_SWITCH,
+        .intval = 1,
     },
     {
-	.ctl_name = MIXER_MICL_CAPTURE_SWITCH,
-	.intval = 1,
+		.ctl_name = MIXER_INTERNAL_SPEAKER_SWITCH,
+        .intval = 1,
+    },
+
+    {
+		.ctl_name = MIXER_SPEAKER_OUT_MUX,
+		.strval = "HPOut Mix", // "Speaker Mix"
     },
     {
-	.ctl_name = MIXER_MICR_CAPTURE_SWITCH,
-	.intval = 1,
+		.ctl_name = MIXER_SPEAKER_OUT_NMUX,
+		.strval = "LN/-R",
     },
     {
-	.ctl_name = MIXER_MICL_CAPTURE_MUX,
-	.strval = "Right",
+		.ctl_name = MIXER_LEFT_HEADPHONE_MUX,
+		.strval = "HP Left Mix",
     },
     {
-	.ctl_name = MIXER_MICL_CAPTURE_MUX,
-	.strval = "Right",
+		.ctl_name = MIXER_RIGHT_HEADPHONE_MUX,
+		.strval = "HP Right Mix",
     },
+    {
+		.ctl_name = MIXER_ABD_AMP_MUX,
+		.strval = "AB Amp",
+    },
+
+	/* capture */
+    {
+        .ctl_name = MIXER_MASTER_CAPTURE_VOLUME,
+        .intval = PERC_TO_CAPTURE_VOLUME(1),
+    },
+    {
+        .ctl_name = MIXER_DMIC_BOOST_CAPTURE_VOLUME,
+        .intval = PERC_TO_DMIC_BOOST_VOLUME(1),
+    },
+
+    {
+		.ctl_name = MIXER_DMIC_EN_CAPTURE_SWITCH,
+        .intval = 1,
+    },
+    {
+		.ctl_name = MIXER_DMIC_PREFILTER_CAPTURE_SWITCH,
+        .intval = 1,
+    },
+    {
+		.ctl_name = MIXER_DMICL2ADC_CAPTURE_SWITCH,
+        .intval = 1,
+    },
+
+    {
+		.ctl_name = MIXER_I2S_OUT_CAPTURE_MUX,
+		.strval = "ADC LR",
+    },
+
     {
         .ctl_name = NULL,
     },
@@ -187,18 +249,15 @@ struct route_setting defaults[] = {
 
 struct mixer_ctls
 {
-	struct mixer_ctl *pcm_volume;
-	struct mixer_ctl *pcm_cap_volume;
+	struct mixer_ctl *master_volume;
+	struct mixer_ctl *master_switch;
 	struct mixer_ctl *speaker_volume;
 	struct mixer_ctl *speaker_switch;
 	struct mixer_ctl *headset_volume;
 	struct mixer_ctl *headset_switch;
-	struct mixer_ctl *micl_volume;
-	struct mixer_ctl *micr_volume;
-	struct mixer_ctl *micl_switch;
-	struct mixer_ctl *micr_switch;
-	struct mixer_ctl *micl_mux;
-	struct mixer_ctl *micr_mux;
+	struct mixer_ctl *capture_volume;
+	struct mixer_ctl *dmic_volume;
+	struct mixer_ctl *dmic_switch;
 };
 
 struct adam_audio_device {
@@ -1022,12 +1081,7 @@ static int in_set_gain(struct audio_stream_in *stream, float gain)
     struct adam_stream_in *in = (struct adam_stream_in *)stream;
     struct adam_audio_device *adev = in->dev;
 
-	unsigned int channel;
-	
-    for (channel = 0; channel < 2; channel++) {
-        mixer_ctl_set_value(adev->mixer_ctls.micl_volume, channel, PERC_TO_CAPTURE_VOLUME(gain));
-        mixer_ctl_set_value(adev->mixer_ctls.micr_volume, channel, PERC_TO_CAPTURE_VOLUME(gain));
-    }
+    mixer_ctl_set_value(adev->mixer_ctls.dmic_volume, 0, PERC_TO_DMIC_BOOST_VOLUME(gain));
 
     return 0;
 }
@@ -1614,9 +1668,9 @@ static int adev_set_master_volume(struct audio_hw_device *dev, float volume)
 
 	LOGD("adev_set_master_volume: volume: %f", volume);
 	
-	mixer_ctl_set_value(adev->mixer_ctls.pcm_volume, 0,
+	mixer_ctl_set_value(adev->mixer_ctls.master_volume, 0,
 		PERC_TO_PCM_VOLUME(volume));
-	mixer_ctl_set_value(adev->mixer_ctls.pcm_volume, 1,
+	mixer_ctl_set_value(adev->mixer_ctls.master_volume, 1,
 		PERC_TO_PCM_VOLUME(volume));
 
     return -ENOSYS;
@@ -1649,9 +1703,8 @@ static int adev_set_mic_mute(struct audio_hw_device *dev, bool state)
     adev->mic_mute = state;
 
 	/* Disable mic if requested */
-	mixer_ctl_set_value(adev->mixer_ctls.micl_switch, 0, state ? 0 : 1);
-	mixer_ctl_set_value(adev->mixer_ctls.micr_switch, 0, state ? 0 : 1);
-	
+	mixer_ctl_set_value(adev->mixer_ctls.dmic_switch, 0, state ? 0 : 1);
+
     return 0;
 }
 
@@ -1859,15 +1912,15 @@ static int adev_open(const hw_module_t* module, const char* name,
 		return -EINVAL;
 	}
 
-	adev->mixer_ctls.pcm_volume = mixer_get_ctl_by_name(adev->mixer, MIXER_PCM_PLAYBACK_VOLUME);
-	if (!adev->mixer_ctls.pcm_volume) {
-		LOGE("Unable to find '%s' mixer control", MIXER_PCM_PLAYBACK_VOLUME);
+	adev->mixer_ctls.master_volume = mixer_get_ctl_by_name(adev->mixer, MIXER_MASTER_PLAYBACK_VOLUME);
+	if (!adev->mixer_ctls.master_volume) {
+		LOGE("Unable to find '%s' mixer control", MIXER_MASTER_PLAYBACK_VOLUME);
 		goto error_out;
 	}
 
-	adev->mixer_ctls.pcm_cap_volume = mixer_get_ctl_by_name(adev->mixer, MIXER_PCM_CAPTURE_VOLUME);
-	if (!adev->mixer_ctls.pcm_cap_volume) {
-		LOGE("Unable to find '%s' mixer control", MIXER_PCM_CAPTURE_VOLUME);
+	adev->mixer_ctls.master_switch = mixer_get_ctl_by_name(adev->mixer, MIXER_MASTER_PLAYBACK_SWITCH);
+	if (!adev->mixer_ctls.master_switch) {
+		LOGE("Unable to find '%s' mixer control", MIXER_MASTER_PLAYBACK_SWITCH);
 		goto error_out;
 	}
 
@@ -1895,39 +1948,21 @@ static int adev_open(const hw_module_t* module, const char* name,
 		goto error_out;
 	}
 
-	adev->mixer_ctls.micl_volume = mixer_get_ctl_by_name(adev->mixer, MIXER_MICL_CAPTURE_VOLUME);
-		if (!adev->mixer_ctls.micl_volume) {
-		LOGE("Unable to find '%s' mixer control", MIXER_MICL_CAPTURE_VOLUME);
+	adev->mixer_ctls.capture_volume = mixer_get_ctl_by_name(adev->mixer, MIXER_MASTER_CAPTURE_VOLUME);
+	if (!adev->mixer_ctls.capture_volume) {
+		LOGE("Unable to find '%s' mixer control", MIXER_MASTER_CAPTURE_VOLUME);
 		goto error_out;
 	}
 
-	adev->mixer_ctls.micr_volume = mixer_get_ctl_by_name(adev->mixer, MIXER_MICR_CAPTURE_VOLUME);
-		if (!adev->mixer_ctls.micr_volume) {
-		LOGE("Unable to find '%s' mixer control", MIXER_MICR_CAPTURE_VOLUME);
+	adev->mixer_ctls.dmic_volume = mixer_get_ctl_by_name(adev->mixer, MIXER_DMIC_BOOST_CAPTURE_VOLUME);
+	if (!adev->mixer_ctls.dmic_volume) {
+		LOGE("Unable to find '%s' mixer control", MIXER_DMIC_BOOST_CAPTURE_VOLUME);
 		goto error_out;
 	}
 
-	adev->mixer_ctls.micl_switch = mixer_get_ctl_by_name(adev->mixer, MIXER_MICL_CAPTURE_SWITCH);
-		if (!adev->mixer_ctls.micl_switch) {
-		LOGE("Unable to find '%s' mixer control", MIXER_MICL_CAPTURE_SWITCH);
-		goto error_out;
-	}
-
-	adev->mixer_ctls.micr_switch = mixer_get_ctl_by_name(adev->mixer, MIXER_MICR_CAPTURE_SWITCH);
-		if (!adev->mixer_ctls.micr_switch) {
-		LOGE("Unable to find '%s' mixer control", MIXER_MICR_CAPTURE_SWITCH);
-		goto error_out;
-	}
-
-	adev->mixer_ctls.micl_mux = mixer_get_ctl_by_name(adev->mixer, MIXER_MICL_CAPTURE_MUX);
-		if (!adev->mixer_ctls.micl_mux) {
-		LOGE("Unable to find '%s' mixer control", MIXER_MICL_CAPTURE_MUX);
-		goto error_out;
-	}
-
-	adev->mixer_ctls.micr_mux = mixer_get_ctl_by_name(adev->mixer, MIXER_MICR_CAPTURE_MUX);
-		if (!adev->mixer_ctls.micr_mux) {
-		LOGE("Unable to find '%s' mixer control", MIXER_MICR_CAPTURE_MUX);
+	adev->mixer_ctls.dmic_switch = mixer_get_ctl_by_name(adev->mixer, MIXER_DMIC_EN_CAPTURE_SWITCH);
+	if (!adev->mixer_ctls.dmic_switch) {
+		LOGE("Unable to find '%s' mixer control", MIXER_DMIC_EN_CAPTURE_SWITCH);
 		goto error_out;
 	}
 
