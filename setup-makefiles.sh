@@ -1,7 +1,7 @@
-#!/bin/sh
+#!/usr/bin/sh
 
 VENDOR=toshiba
-DEVICE=betelgeuse
+DEVICE=paz00
 OUTDIR=vendor/$VENDOR/$DEVICE
 MAKEFILE=../../../$OUTDIR/$DEVICE-vendor-blobs.mk
 

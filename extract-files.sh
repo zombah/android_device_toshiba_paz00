@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/sh
 
 BASE=../../../vendor/toshiba/betelgeuse/proprietary
 rm -rf $BASE/*

@@ -18,9 +18,9 @@ PRODUCT_COPY_FILES += \
     device/toshiba/paz00/init.paz00.rc:root/init.paz00.rc \
     device/toshiba/paz00/init.nv_dev_board.usb.rc:root/init.nv_dev_board.usb.rc \
     device/toshiba/paz00/ueventd.paz00.rc:root/ueventd.paz00.rc \
-    device/toshiba/betelgeuse/media_profiles.xml:system/etc/media_profiles.xml \
-    device/toshiba/betelgeuse/egalax_i2c.idc:system/usr/idc/egalax_i2c.idc \
-    device/toshiba/betelgeuse/egalax_ts.idc:system/usr/idc/egalax_ts.idc \
+    device/toshiba/paz00/media_profiles.xml:system/etc/media_profiles.xml \
+    device/toshiba/paz00/egalax_i2c.idc:system/usr/idc/egalax_i2c.idc \
+    device/toshiba/paz00/egalax_ts.idc:system/usr/idc/egalax_ts.idc \
     frameworks/base/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
     frameworks/base/data/etc/android.hardware.camera.front.xml:system/etc/permissions/android.hardware.camera.front.xml \
     frameworks/base/data/etc/android.hardware.camera.xml:system/etc/permissions/android.hardware.camera.xml \
@@ -60,11 +60,11 @@ PRODUCT_COPY_FILES += \
 #    device/toshiba/betelgeuse/modules/scsi_wait_scan.ko:system/modules/scsi_wait_scan.ko \
 #    device/toshiba/betelgeuse/modules/bcm4329.ko:system/modules/bcm4329.ko 
 
-PRODUCT_COPY_FILES += \
-    hardware/AR6kSDK.3.1/AR6kSDK.build_3.1_RC.563/host/miscdrv/ar3k/30101coex/PS_ASIC_aclHighPri.pst:/system/wifi/ar3k/30101coex/PS_ASIC_aclHighPri.pst \
-    hardware/AR6kSDK.3.1/AR6kSDK.build_3.1_RC.563/host/miscdrv/ar3k/30101coex/PS_ASIC_aclLowPri.pst:/system/wifi/ar3k/30101coex/PS_ASIC_aclLowPri.pst \
-    hardware/AR6kSDK.3.1/AR6kSDK.build_3.1_RC.563/host/miscdrv/ar3k/30101coex/PS_ASIC.pst:/system/wifi/ar3k/30101coex/PS_ASIC.pst \
-    hardware/AR6kSDK.3.1/AR6kSDK.build_3.1_RC.563/host/miscdrv/ar3k/30101coex/RamPatch.txt:/system/wifi/ar3k/30101coex/RamPatch.txt
+#PRODUCT_COPY_FILES += \
+#    hardware/AR6kSDK.3.1/AR6kSDK.build_3.1_RC.563/host/miscdrv/ar3k/30101coex/PS_ASIC_aclHighPri.pst:/system/wifi/ar3k/30101coex/PS_ASIC_aclHighPri.pst \
+#    hardware/AR6kSDK.3.1/AR6kSDK.build_3.1_RC.563/host/miscdrv/ar3k/30101coex/PS_ASIC_aclLowPri.pst:/system/wifi/ar3k/30101coex/PS_ASIC_aclLowPri.pst \
+#    hardware/AR6kSDK.3.1/AR6kSDK.build_3.1_RC.563/host/miscdrv/ar3k/30101coex/PS_ASIC.pst:/system/wifi/ar3k/30101coex/PS_ASIC.pst \
+#    hardware/AR6kSDK.3.1/AR6kSDK.build_3.1_RC.563/host/miscdrv/ar3k/30101coex/RamPatch.txt:/system/wifi/ar3k/30101coex/RamPatch.txt
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf
@@ -162,7 +162,7 @@ PRODUCT_CHARACTERISTICS := tablet
 PRODUCT_AAPT_CONFIG := xlarge mdpi
 
 DEVICE_PACKAGE_OVERLAYS := \
-    device/toshiba/betelgeuse/overlay
+    device/toshiba/paz00/overlay
 
 PRODUCT_TAGS += dalvik.gc.type-precise
 
@@ -190,5 +190,5 @@ PRODUCT_PACKAGES += \
 
 $(call inherit-product-if-exists, vendor/toshiba/paz00/device-vendor.mk)
 $(call inherit-product, frameworks/base/build/phone-hdpi-512-dalvik-heap.mk)
-$(call inherit-product-if-exists, hardware/AR6kSDK.3.0/host/device-ath6k.mk)
+#$(call inherit-product-if-exists, hardware/AR6kSDK.3.0/host/device-ath6k.mk)
 
