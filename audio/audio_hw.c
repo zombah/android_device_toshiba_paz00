@@ -1669,9 +1669,9 @@ static int adev_set_master_volume(struct audio_hw_device *dev, float volume)
 	LOGD("adev_set_master_volume: volume: %f", volume);
 	
 	mixer_ctl_set_value(adev->mixer_ctls.master_volume, 0,
-		PERC_TO_PCM_VOLUME(volume));
+		PERC_TO_MASTER_VOLUME(volume));
 	mixer_ctl_set_value(adev->mixer_ctls.master_volume, 1,
-		PERC_TO_PCM_VOLUME(volume));
+		PERC_TO_MASTER_VOLUME(volume));
 
     return -ENOSYS;
 }
