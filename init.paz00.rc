@@ -22,7 +22,11 @@ on fs
     mount ext4 /dev/block/mmcblk0p6 /data wait noatime
     setprop ro.crypto.tmpfs_options size=128m,mode=0771,uid=1000,gid=1000
     mkdir /flexrom 0770 root system
-    insmod /system/wifi/ar6000.ko
+# install modules
+    insmod /system/lib/modules/rt2x00lib.ko
+    insmod /system/lib/modules/rt2x00usb.ko
+    insmod /system/lib/modules/rt2800lib.ko
+    insmod /system/lib/modules/rt2800usb.ko
     insmod /system/lib/modules/ntfs.ko
     insmod /system/lib/modules/cifs.ko
 
