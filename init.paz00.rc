@@ -26,7 +26,7 @@ on fs
     insmod /system/lib/modules/rt2x00lib.ko
     insmod /system/lib/modules/rt2x00usb.ko
     insmod /system/lib/modules/rt2800lib.ko
-    insmod /system/lib/modules/rt2800usb.ko
+#    insmod /system/lib/modules/rt2800usb.ko
     insmod /system/lib/modules/ntfs.ko
     insmod /system/lib/modules/cifs.ko
 
@@ -118,7 +118,7 @@ on boot
     write /sys/module/cpuidle/parameters/lp2_in_idle 1
 
 service wpa_supplicant /system/bin/wpa_supplicant \
-    -Dwext -iwlan0 -c/data/misc/wifi/wpa_supplicant.conf
+    -Dwext -iwlan0 -d -c/data/misc/wifi/wpa_supplicant.conf
 #   we will start as root and wpa_supplicant will switch to user wifi
 #   after setting up the capabilities required for WEXT
 #   user wifi
