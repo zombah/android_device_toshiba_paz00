@@ -26,6 +26,8 @@
 #include "linux_ioctl.h"
 #include "driver_nl80211.h"
 
+#include "driver_cmd_common.h"
+
 #define WPA_EVENT_DRIVER_STATE          "CTRL-EVENT-DRIVER-STATE "
 #define DRV_NUMBER_SEQUENTIAL_ERRORS     4
 
@@ -253,5 +255,84 @@ int wpa_driver_nl80211_driver_cmd(void *priv, char *cmd, char *buf,
 	} else {
 		wpa_printf(MSG_INFO, "%s: Unsupported command %s", __func__, cmd);
 	}
+	return ret;
+}
+
+int wpa_driver_set_p2p_noa(void *priv, u8 count, int start, int duration)
+{
+	char buf[MAX_DRV_CMD_SIZE];
+
+	memset(buf, 0, sizeof(buf));
+	wpa_printf(MSG_DEBUG, "%s: Entry", __func__);
+	snprintf(buf, sizeof(buf), "P2P_SET_NOA %d %d %d", count, start, duration);
+	return wpa_driver_nl80211_driver_cmd(priv, buf, buf, strlen(buf)+1);
+}
+
+int wpa_driver_get_p2p_noa(void *priv, u8 *buf, size_t len)
+{
+	char rbuf[MAX_DRV_CMD_SIZE];
+	char *cmd = "P2P_GET_NOA";
+	int ret;
+
+	wpa_printf(MSG_DEBUG, "%s: Entry", __func__);
+	os_memset(buf, 0, len);
+	ret = wpa_driver_nl80211_driver_cmd(priv, cmd, rbuf, sizeof(rbuf));
+	if (ret <= 0)
+		return 0;
+	ret >>= 1;
+	if (ret > (int)len)
+		ret = (int)len;
+	hexstr2bin(rbuf, buf, ret);
+	return ret;
+}
+
+int wpa_driver_set_p2p_ps(void *priv, int legacy_ps, int opp_ps, int ctwindow)
+{
+	char buf[MAX_DRV_CMD_SIZE];
+
+	memset(buf, 0, sizeof(buf));
+	wpa_printf(MSG_DEBUG, "%s: Entry", __func__);
+	snprintf(buf, sizeof(buf), "P2P_SET_PS %d %d %d", legacy_ps, opp_ps, ctwindow);
+	return wpa_driver_nl80211_driver_cmd(priv, buf, buf, strlen(buf) + 1);
+}
+
+int wpa_driver_set_ap_wps_p2p_ie(void *priv, const struct wpabuf *beacon,
+				 const struct wpabuf *proberesp,
+				 const struct wpabuf *assocresp)
+{
+	char buf[MAX_WPSP2PIE_CMD_SIZE];
+	struct wpabuf *ap_wps_p2p_ie = NULL;
+	char *_cmd = "SET_AP_WPS_P2P_IE";
+	char *pbuf;
+	int ret = 0;
+	int i;
+	struct cmd_desc {
+		int cmd;
+		const struct wpabuf *src;
+	} cmd_arr[] = {
+		{0x1, beacon},
+		{0x2, proberesp},
+		{0x4, assocresp},
+		{-1, NULL}
+	};
+
+	wpa_printf(MSG_DEBUG, "%s: Entry", __func__);
+	for (i = 0; cmd_arr[i].cmd != -1; i++) {
+		os_memset(buf, 0, sizeof(buf));
+		pbuf = buf;
+		pbuf += sprintf(pbuf, "%s %d", _cmd, cmd_arr[i].cmd);
+		*pbuf++ = '\0';
+		ap_wps_p2p_ie = cmd_arr[i].src ?
+			wpabuf_dup(cmd_arr[i].src) : NULL;
+		if (ap_wps_p2p_ie) {
+			os_memcpy(pbuf, wpabuf_head(ap_wps_p2p_ie), wpabuf_len(ap_wps_p2p_ie));
+			ret = wpa_driver_nl80211_driver_cmd(priv, buf, buf,
+				strlen(_cmd) + 3 + wpabuf_len(ap_wps_p2p_ie));
+			wpabuf_free(ap_wps_p2p_ie);
+			if (ret < 0)
+				break;
+		}
+	}
+
 	return ret;
 }
