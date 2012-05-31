@@ -1970,7 +1970,7 @@ static int adev_open(const hw_module_t* module, const char* name,
 	pthread_mutex_lock(&adev->lock);
 	set_route_by_array(adev->mixer, defaults, 1);
 	adev->mode = AUDIO_MODE_NORMAL;
-	adev->devices = AUDIO_DEVICE_OUT_SPEAKER | AUDIO_DEVICE_IN_BUILTIN_MIC;
+	adev->devices = AUDIO_DEVICE_OUT_SPEAKER | AUDIO_DEVICE_IN_BUILTIN_MIC | AUDIO_DEVICE_OUT_WIRED_HEADSET;
 
 	pthread_mutex_unlock(&adev->lock);
 
