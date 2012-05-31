@@ -34,10 +34,10 @@ BOARD_CUSTOM_RECOVERY_KEYMAPPING 	:= ../../device/toshiba/paz00/recovery/recover
 # Wifi related defines
 # v6 
 #CONFIG_DRIVER_AR6000 			:= true
-CONFIG_DRIVER_WEXT 			:= true
+#CONFIG_DRIVER_WEXT 			:= true
 #CONFIG_DRIVER_HOSTAP			:= true
-CONFIG_DRIVER_NL80211			:= true
-CONFIG_DRIVER_WIRED			:= true
+#CONFIG_DRIVER_NL80211			:= true
+#CONFIG_DRIVER_WIRED			:= true
 #BOARD_WPA_SUPPLICANT_DRIVER 		:= AR6000
 #WPA_SUPPLICANT_VERSION      		:= VER_0_6_X
 #BOARD_WEXT_NO_COMBO_SCAN		:= true
