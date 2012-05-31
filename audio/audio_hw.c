@@ -149,7 +149,7 @@ struct route_setting defaults[] = {
     /* playback */
     {
         .ctl_name = MIXER_MASTER_PLAYBACK_VOLUME,
-        .intval = PERC_TO_MASTER_VOLUME(0.8),
+        .intval = PERC_TO_MASTER_VOLUME(0.6),
     },
     {
         .ctl_name = MIXER_MASTER_PLAYBACK_SWITCH,
@@ -158,7 +158,7 @@ struct route_setting defaults[] = {
 
     {
         .ctl_name = MIXER_SPEAKER_PLAYBACK_VOLUME,
-        .intval = PERC_TO_SPEAKER_VOLUME(1),
+        .intval = PERC_TO_SPEAKER_VOLUME(0.5),
     },
     {
 		.ctl_name = MIXER_SPEAKER_PLAYBACK_SWITCH,
@@ -167,7 +167,7 @@ struct route_setting defaults[] = {
 
     {
         .ctl_name = MIXER_HEADSET_PLAYBACK_VOLUME,
-        .intval = PERC_TO_HEADSET_VOLUME(1),
+        .intval = PERC_TO_HEADSET_VOLUME(0.5),
     },
     {
 		.ctl_name = MIXER_HEADSET_PLAYBACK_SWITCH,
@@ -2015,7 +2015,7 @@ struct audio_module HAL_MODULE_INFO_SYM = {
         .version_major = 1,
         .version_minor = 0,
         .id = AUDIO_HARDWARE_MODULE_ID,
-        .name = "Folio 100 audio HW HAL",
+        .name = "Toshiba AC100 audio HW HAL",
         .author = "The Android Open Source Project",
         .methods = &hal_module_methods,
     },
