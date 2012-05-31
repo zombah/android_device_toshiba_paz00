@@ -68,7 +68,7 @@ PRODUCT_COPY_FILES += \
 
 # WiFi/BT Firmware
 PRODUCT_COPY_FILES += \
-        $(LOCAL_PATH)/prebuilt/firmware/rt2870.bin:system/vendor/firmware/rt2870.bin
+        $(LOCAL_PATH)/prebuild/firmware/rt2870.bin:system/vendor/firmware/rt2870.bin
 
 
 PRODUCT_COPY_FILES += \
