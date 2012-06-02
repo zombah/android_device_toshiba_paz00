@@ -15,6 +15,7 @@
 #
 
 PRODUCT_COPY_FILES += \
+    device/toshiba/paz00/init.rc:root/init.rc \	
     device/toshiba/paz00/init.paz00.rc:root/init.paz00.rc \
     device/toshiba/paz00/init.nv_dev_board.usb.rc:root/init.nv_dev_board.usb.rc \
     device/toshiba/paz00/ueventd.paz00.rc:root/ueventd.paz00.rc \
