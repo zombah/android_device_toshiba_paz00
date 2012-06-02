@@ -87,7 +87,6 @@ BOARD_FLASH_BLOCK_SIZE 			:= 131072
 # Disable spase in image creation, otherwise image not mountble
 TARGET_USERIMAGES_SPARSE_EXT_DISABLED := true
 
-
 # Setting this to avoid boot locks on the system from using the "misc" partition.
 BOARD_HAS_NO_MISC_PARTITION 		:= true
 
@@ -95,7 +94,7 @@ BOARD_HAS_NO_MISC_PARTITION 		:= true
 TARGET_NO_RECOVERY 			:= true
 
 # Indicate that the board has an Internal SD Card
-BOARD_HAS_SDCARD_INTERNAL 		:= true
+#BOARD_HAS_SDCARD_INTERNAL 		:= true
 
 BOARD_DATA_DEVICE 			:= /dev/block/mmcblk0p6
 BOARD_DATA_FILESYSTEM 			:= ext4
@@ -105,7 +104,10 @@ BOARD_SYSTEM_DEVICE 			:= /dev/block/mmcblk0p3
 BOARD_SYSTEM_FILESYSTEM 		:= ext4
 BOARD_HAS_NO_SELECT_BUTTON 		:= true
 
+# Vold settings
 BOARD_VOLD_MAX_PARTITIONS 		:= 11
+BOARD_VOLD_EMMC_SHARES_DEV_MAJOR	:= false
+BOARD_VOLD_DISC_HAS_MULTIPLE_MAJORS	:= false
 
 BOARD_NO_ALLOW_DEQUEUE_CURRENT_BUFFER 	:= true
 
