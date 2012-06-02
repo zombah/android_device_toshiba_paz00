@@ -27,7 +27,7 @@
     <!-- This device does not allow sms service. -->
     <bool name="config_sms_capable">true</bool>
     
-        <bool name="config_showNavigationBar">false</bool>
+    <bool name="config_showNavigationBar">false</bool>
 
     <string name="config_datause_iface">wlan0</string>
 
@@ -35,7 +35,7 @@
 
     <bool name="config_sf_limitedAlpha">true</bool>
  
-   <bool name="config_allowAllRotations">true</bool>
+   <bool name="config_allowAllRotations">false</bool>
 
    <bool name="config_sf_slowBlur">true</bool>
 
