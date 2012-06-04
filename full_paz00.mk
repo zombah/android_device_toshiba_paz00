@@ -37,11 +37,11 @@ PRODUCT_PROPERTY_OVERRIDES := \
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)
 $(call inherit-product, device/toshiba/paz00/paz00.mk)
 $(call inherit-product-if-exists, vendor/toshiba/paz00/paz00-vendor.mk)
-#$(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 
 PRODUCT_NAME := full_paz00
 PRODUCT_DEVICE := paz00
 PRODUCT_BRAND := toshiba
 PRODUCT_MODEL := ac100
 PRODUCT_MANUFACTURER := toshiba
+# Choose langs to include
 #PRODUCT_LOCALES := en_US ru_RU

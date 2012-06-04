@@ -15,26 +15,26 @@
 #
 
 PRODUCT_COPY_FILES += \
-    device/toshiba/paz00/init.rc:root/init.rc \	
-    device/toshiba/paz00/init.paz00.rc:root/init.paz00.rc \
-    device/toshiba/paz00/init.nv_dev_board.usb.rc:root/init.nv_dev_board.usb.rc \
-    device/toshiba/paz00/ueventd.paz00.rc:root/ueventd.paz00.rc \
-    device/toshiba/paz00/media_profiles.xml:system/etc/media_profiles.xml \
-    device/toshiba/paz00/egalax_i2c.idc:system/usr/idc/egalax_i2c.idc \
-    device/toshiba/paz00/egalax_ts.idc:system/usr/idc/egalax_ts.idc \
+    device/toshiba/paz00/prebuild/init.paz00.rc:root/init.paz00.rc \
+    device/toshiba/paz00/prebuild/init.rc:root/init.rc \
+    device/toshiba/paz00/prebuild/init.nv_dev_board.usb.rc:root/init.nv_dev_board.usb.rc \
+    device/toshiba/paz00/prebuild/init.local.rc:system/etc/init.local.rc \
+    device/toshiba/paz00/prebuild/ueventd.paz00.rc:root/ueventd.paz00.rc \
+    device/toshiba/paz00/prebuild/media_profiles.xml:system/etc/media_profiles.xml \
+    device/toshiba/paz00/prebuild/egalax_i2c.idc:system/usr/idc/egalax_i2c.idc \
+    device/toshiba/paz00/prebuild/egalax_ts.idc:system/usr/idc/egalax_ts.idc \
     frameworks/base/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
     frameworks/base/data/etc/android.hardware.camera.front.xml:system/etc/permissions/android.hardware.camera.front.xml \
     frameworks/base/data/etc/android.hardware.camera.xml:system/etc/permissions/android.hardware.camera.xml \
     frameworks/base/data/etc/android.hardware.location.gps.xml:system/etc/permissions/android.hardware.location.gps.xml \
     frameworks/base/data/etc/android.hardware.sensor.accelerometer.xml:system/etc/permissions/android.hardware.sensor.accelerometer.xml \
-    frameworks/base/data/etc/android.hardware.sensor.compass.xml:system/etc/permissions/android.hardware.sensor.compass.xml \
-    frameworks/base/data/etc/android.hardware.sensor.gyroscope.xml:system/etc/permissions/android.hardware.sensor.gyroscope.xml \
     frameworks/base/data/etc/android.hardware.sensor.light.xml:system/etc/permissions/android.hardware.sensor.light.xml \
     frameworks/base/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
     frameworks/base/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
     frameworks/base/data/etc/android.hardware.wifi.direct.xml:system/etc/permissions/android.hardware.wifi.direct.xml \
     frameworks/base/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml \
     frameworks/base/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
+    frameworks/base/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
     frameworks/base/data/etc/tablet_core_hardware.xml:system/etc/permissions/tablet_core_hardware.xml 
 
 # Keychars
@@ -53,19 +53,8 @@ PRODUCT_COPY_FILES += \
 
 # Vold
 PRODUCT_COPY_FILES += \
-        $(LOCAL_PATH)/vold.fstab:system/etc/vold.fstab
+        $(LOCAL_PATH)/prebuild/vold.fstab:system/etc/vold.fstab
 
-
-# Kernel modules
-#PRODUCT_COPY_FILES += \
-#    device/toshiba/betelgeuse/modules/scsi_wait_scan.ko:system/modules/scsi_wait_scan.ko \
-#    device/toshiba/betelgeuse/modules/bcm4329.ko:system/modules/bcm4329.ko 
-
-#PRODUCT_COPY_FILES += \
-#    hardware/AR6kSDK.3.1/AR6kSDK.build_3.1_RC.563/host/miscdrv/ar3k/30101coex/PS_ASIC_aclHighPri.pst:/system/wifi/ar3k/30101coex/PS_ASIC_aclHighPri.pst \
-#    hardware/AR6kSDK.3.1/AR6kSDK.build_3.1_RC.563/host/miscdrv/ar3k/30101coex/PS_ASIC_aclLowPri.pst:/system/wifi/ar3k/30101coex/PS_ASIC_aclLowPri.pst \
-#    hardware/AR6kSDK.3.1/AR6kSDK.build_3.1_RC.563/host/miscdrv/ar3k/30101coex/PS_ASIC.pst:/system/wifi/ar3k/30101coex/PS_ASIC.pst \
-#    hardware/AR6kSDK.3.1/AR6kSDK.build_3.1_RC.563/host/miscdrv/ar3k/30101coex/RamPatch.txt:/system/wifi/ar3k/30101coex/RamPatch.txt
 
 # WiFi/BT Firmware
 PRODUCT_COPY_FILES += \
@@ -75,56 +64,15 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf
 
-#PRODUCT_COPY_FILES += \
-#    $(LOCAL_PATH)/wifi/dhcpcd.conf:system/etc/dhcpcd/dhcpcd.conf \
-#    $(LOCAL_PATH)/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
-#    $(LOCAL_PATH)/wifi/hostapd.conf:/etc/wifi/hostapd.conf \
-#    $(LOCAL_PATH)/wifi/ar3k/30101/PS_ASIC.pst:/system/wifi/ar3k/30101/PS_ASIC.pst \
-#    $(LOCAL_PATH)/wifi/ar3k/30101/RamPatch.txt:/system/wifi/ar3k/30101/RamPatch.txt \
-#    $(LOCAL_PATH)/wifi/ar3k/30101coex/PS_ASIC.pst:/system/wifi/ar3k/30101coex/PS_ASIC.pst \
-#    $(LOCAL_PATH)/wifi/ar3k/30101coex/RamPatch.txt:/system/wifi/ar3k/30101coex/RamPatch.txt \
-#    $(LOCAL_PATH)/wifi/ath6k/AR6003/hw2.0/otp.bin.z77:/system/wifi/ath6k/AR6003/hw2.0/otp.bin.z77 \
-#    $(LOCAL_PATH)/wifi/ath6k/AR6003/hw2.0/data.patch.bin:/system/wifi/ath6k/AR6003/hw2.0/data.patch.bin \
-#    $(LOCAL_PATH)/wifi/ath6k/AR6003/hw2.0/athwlan.bin.z77:/system/wifi/ath6k/AR6003/hw2.0/athwlan.bin.z77 \
-#    $(LOCAL_PATH)/wifi/ath6k/AR6003/hw2.0/athtcmd_ram.bin:/system/wifi/ath6k/AR6003/hw2.0/athtcmd_ram.bin \
-#    $(LOCAL_PATH)/wifi/ath6k/AR6003/hw2.0/bdata.SD31.bin:/system/wifi/ath6k/AR6003/hw2.0/bdata.SD31.bin \
-#    $(LOCAL_PATH)/wifi/ath6k/AR6003/hw2.0/bdata.WB31.bin:/system/wifi/ath6k/AR6003/hw2.0/bdata.WB31.bin
-
-#PRODUCT_COPY_FILES += \
-#    $(LOCAL_PATH)/wifi2/ath6k/AR6003/hw2.0/athwlan.bin.z77:/system/etc/firmware/ath6k/AR6003/hw2.0/athwlan.bin.z77 \
-#    $(LOCAL_PATH)/wifi2/ath6k/AR6003/hw2.0/bdata.WB31.bin:/system/etc/firmware/ath6k/AR6003/hw2.0/bdata.WB31.bin \
-#    $(LOCAL_PATH)/wifi2/ath6k/AR6003/hw2.0/otp.bin.z77:/system/etc/firmware/ath6k/AR6003/hw2.0/otp.bin.z77 \
-#    $(LOCAL_PATH)/wifi2/ath6k/AR6003/hw2.0/bdata.SD31.bin:/system/etc/firmware/ath6k/AR6003/hw2.0/bdata.SD31.bin \
-#    $(LOCAL_PATH)/wifi2/ath6k/AR6003/hw2.0/data.patch.bin:/system/etc/firmware/ath6k/AR6003/hw2.0/data.patch.bin \
-#    $(LOCAL_PATH)/wifi2/ath6k/AR6003/hw2.0/bdata.SD32.bin:/system/etc/firmware/ath6k/AR6003/hw2.0/bdata.SD32.bin \
-#    $(LOCAL_PATH)/wifi2/ar3k/30101/ar3kbdaddr.pst:/system/etc/firmware/ar3k/30101/ar3kbdaddr.pst \
-#    $(LOCAL_PATH)/wifi2/ar3k/30101/PS_ASIC.pst:/system/etc/firmware/ar3k/30101/PS_ASIC.pst \
-#    $(LOCAL_PATH)/wifi2/ar3k/30101/RamPatch.txt:/system/etc/firmware/ar3k/30101/RamPatch.txt \
-#    $(LOCAL_PATH)/wifi2/ar3k/ramps_0x01020200_40.dfu:/system/etc/firmware/ar3k/ramps_0x01020200_40.dfu \
-#    $(LOCAL_PATH)/wifi2/ar3k/ramps_0x01020001_26.dfu:/system/etc/firmware/ar3k/ramps_0x01020001_26.dfu \
-#    $(LOCAL_PATH)/wifi2/ar3k/AthrBT_0x01020200.dfu:/system/etc/firmware/ar3k/AthrBT_0x01020200.dfu \
-#    $(LOCAL_PATH)/wifi2/ar3k/30000/ar3kbdaddr.pst:/system/etc/firmware/ar3k/30000/ar3kbdaddr.pst \
-#    $(LOCAL_PATH)/wifi2/ar3k/30000/PS_ASIC.pst:/system/etc/firmware/ar3k/30000/PS_ASIC.pst \
-#    $(LOCAL_PATH)/wifi2/ar3k/30000/RamPatch.txt:/system/etc/firmware/ar3k/30000/RamPatch.txt \
-#    $(LOCAL_PATH)/wifi2/ar3k/1020200/ar3kbdaddr.pst:/system/etc/firmware/ar3k/1020200/ar3kbdaddr.pst \
-#    $(LOCAL_PATH)/wifi2/ar3k/1020200/PS_ASIC.pst:/system/etc/firmware/ar3k/1020200/PS_ASIC.pst \
-#    $(LOCAL_PATH)/wifi2/ar3k/1020200/RamPatch.txt:/system/etc/firmware/ar3k/1020200/RamPatch.txt \
-#    $(LOCAL_PATH)/wifi2/ar3k/30101coex/ar3kbdaddr.pst:/system/etc/firmware/ar3k/30101coex/ar3kbdaddr.pst \
-#    $(LOCAL_PATH)/wifi2/ar3k/30101coex/PS_ASIC.pst:/system/etc/firmware/ar3k/30101coex/PS_ASIC.pst \
-#    $(LOCAL_PATH)/wifi2/ar3k/30101coex/PS_ASIC_aclLowPri.pst:/system/etc/firmware/ar3k/30101coex/PS_ASIC_aclLowPri.pst \
-#    $(LOCAL_PATH)/wifi2/ar3k/30101coex/PS_ASIC_aclHighPri.pst:/system/etc/firmware/ar3k/30101coex/PS_ASIC_aclHighPri.pst \
-#    $(LOCAL_PATH)/wifi2/ar3k/30101coex/RamPatch.txt:/system/etc/firmware/ar3k/30101coex/RamPatch.txt \
-#    $(LOCAL_PATH)/wifi2/ar3k/ramps_0x01020200_26.dfu:/system/etc/firmware/ar3k/ramps_0x01020200_26.dfu \
-#    $(LOCAL_PATH)/wifi2/ar3k/AthrBT_0x01020001.dfu:/system/etc/firmware/ar3k/AthrBT_0x01020001.dfu
-
 # Some files for 3G
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/ppp/ip-up:/system/etc/ppp/ip-up \
     $(LOCAL_PATH)/ppp/ip-down:/system/etc/ppp/ip-down
 
+# Alsa configs
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/asound.conf:/system/etc/asound.conf \
-    $(LOCAL_PATH)/libasound.so:/system/lib/libasound.so \
+    $(LOCAL_PATH)/prebuild/asound.conf:/system/etc/asound.conf \
+    $(LOCAL_PATH)/prebuild/libasound.so:/system/lib/libasound.so \
     $(LOCAL_PATH)/alsa/alsa.conf:/system/usr/share/alsa/alsa.conf \
     $(LOCAL_PATH)/alsa/cards/aliases.conf:/system/usr/share/alsa/cards/aliases.conf \
     $(LOCAL_PATH)/alsa/pcm/modem.conf:/system/usr/share/alsa/pcm/modem.conf \
@@ -183,7 +131,6 @@ PRODUCT_PACKAGES += \
     tinyplay \
     tinycap \
     tinymix \
-    sensors.tegra \
     libhuaweigeneric-ril \
     audio.primary.tegra \
     audio.a2dp.default \
@@ -194,7 +141,11 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     make_ext4fs
 
+# Extra apps
+PRODUCT_PACKAGES += \
+    FileManager \
+    Pacman \
+    dropbear
+
 $(call inherit-product-if-exists, vendor/toshiba/paz00/device-vendor.mk)
 $(call inherit-product, frameworks/base/build/phone-hdpi-512-dalvik-heap.mk)
-#$(call inherit-product-if-exists, hardware/AR6kSDK.3.0/host/device-ath6k.mk)
-

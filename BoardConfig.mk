@@ -32,16 +32,6 @@ BOARD_USE_USB_MASS_STORAGE_SWITCH 	:= true
 BOARD_CUSTOM_RECOVERY_KEYMAPPING 	:= ../../device/toshiba/paz00/recovery/recovery_ui.c
 
 # Wifi related defines
-# v6 
-#CONFIG_DRIVER_AR6000 			:= true
-#CONFIG_DRIVER_WEXT 			:= true
-#CONFIG_DRIVER_HOSTAP			:= true
-#CONFIG_DRIVER_NL80211			:= true
-#CONFIG_DRIVER_WIRED			:= true
-#BOARD_WPA_SUPPLICANT_DRIVER 		:= AR6000
-#WPA_SUPPLICANT_VERSION      		:= VER_0_6_X
-#BOARD_WEXT_NO_COMBO_SCAN		:= true
-
 BOARD_WPA_SUPPLICANT_DRIVER 		:= NL80211
 WPA_SUPPLICANT_VERSION 			:= VER_0_8_X
 BOARD_WPA_SUPPLICANT_PRIVATE_LIB 	:= lib_driver_cmd_wl12xx
@@ -51,9 +41,6 @@ BOARD_WLAN_DEVICE 			:= wlan0
 
 WIFI_DRIVER_MODULE_NAME                 := rt2800usb
 WIFI_DRIVER_MODULE_PATH                 := /system/lib/modules/rt2800usb.ko
-
-#BOARD_WLAN_ATHEROS_SDK 		:= hardware/AR6kSDK.3.1/AR6kSDK.build_3.1_RC.563
-#BOARD_WLAN_CHIP_AR6003 		:= true
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH 			:= true
@@ -66,13 +53,13 @@ BOARD_KERNEL_BASE 			:= 0x10000000
 BOARD_PAGE_SIZE 			:= 0x00000800
 
 # Audio
-#BOARD_USES_ALSA_AUDIO			:= true
+BOARD_USES_ALSA_AUDIO			:= true
 BUILD_WITH_ALSA_UTILS			:= true
 BOARD_USES_GENERIC_AUDIO 		:= true
 BOARD_USES_AUDIO_LEGACY 		:= false
 TARGET_USES_OLD_LIBSENSORS_HAL 		:= false
 
-BOARD_EGL_CFG 				:= device/toshiba/paz00/egl.cfg
+BOARD_EGL_CFG 				:= device/toshiba/paz00/prebuild/egl.cfg
 TARGET_OTA_ASSERT_DEVICE 		:= paz00,ac100,GT-P7510
 
 # Partitions 
@@ -121,3 +108,7 @@ BOARD_HAVE_GPS				:= false
 BOARD_USES_SECURE_SERVICES		:= true
 BOARD_SKIP_ANDROID_DOC_BUILD		:= true
 TARGET_HAS_THIRD_PARTY_APPS		:= true
+
+# libsensor from android-x86
+BOARD_USES_KBDSENSOR 			:= true
+BOARD_USES_KBDSENSOR_ROTKEY1		:= true
