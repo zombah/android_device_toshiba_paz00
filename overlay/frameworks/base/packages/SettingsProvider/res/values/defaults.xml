@@ -17,8 +17,10 @@
  */
 -->
 <resources>
-    <bool name="def_accelerometer_rotation">false</bool>
+    <bool name="def_accelerometer_rotation">true</bool>
     <bool name="def_install_non_market_apps">true</bool>
     <bool name="def_wifi_on">true</bool>
-    <integer name="def_screen_off_timeout">60000</integer>
+    <integer name="def_screen_off_timeout">600000</integer>
+    <!-- Default for Settings.System.USER_ROTATION -->
+    <integer name="def_user_rotation">0</integer>
 </resources>

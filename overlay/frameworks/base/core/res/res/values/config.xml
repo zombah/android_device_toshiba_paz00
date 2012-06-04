@@ -35,7 +35,7 @@
 
     <bool name="config_sf_limitedAlpha">true</bool>
  
-   <bool name="config_allowAllRotations">false</bool>
+   <bool name="config_allowAllRotations">true</bool>
 
    <bool name="config_sf_slowBlur">true</bool>
 
