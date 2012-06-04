@@ -144,7 +144,6 @@ PRODUCT_PACKAGES += \
 # Extra apps
 PRODUCT_PACKAGES += \
     FileManager \
-    Pacman \
     dropbear
 
 $(call inherit-product-if-exists, vendor/toshiba/paz00/device-vendor.mk)
