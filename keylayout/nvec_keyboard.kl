@@ -26,7 +26,7 @@ key 99    CAMERA
 key 102   ENVELOPE
 key 107   ENDCALL
 key 110   APP_SWITCH
-key 111   SLEEP
+key 111   MENU
 key 13    EQUALS
 key 14    DEL
 key 15    TAB
@@ -74,7 +74,7 @@ key 29    CTRL_LEFT
 key 217   SEARCH            WAKE_DROPPED
 key 125   HOME
 key 56    ALT_LEFT
-#key 41    GRAVE
+key 41    GRAVE
 key 57    SPACE
 key 100   ALT_RIGHT
 key 86    BACKSLASH

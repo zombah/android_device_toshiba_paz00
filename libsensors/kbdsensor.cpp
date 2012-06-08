@@ -92,7 +92,7 @@ SensorPollContext::SensorPollContext(const struct hw_module_t *module, struct hw
 			}
 
 			// TODO: parse /etc/excluded-input-devices.xml
-			if (!strcmp(name, "AT Translated Set 2 keyboard")) {
+			if (!strcmp(name, "nvec keyboard")) {
 				LOGI("open %s ok", name);
 				break;
 			}

@@ -16,7 +16,6 @@
 
 PRODUCT_COPY_FILES += \
     device/toshiba/paz00/prebuild/init.paz00.rc:root/init.paz00.rc \
-    device/toshiba/paz00/prebuild/init.rc:root/init.rc \
     device/toshiba/paz00/prebuild/init.nv_dev_board.usb.rc:root/init.nv_dev_board.usb.rc \
     device/toshiba/paz00/prebuild/init.local.rc:system/etc/init.local.rc \
     device/toshiba/paz00/prebuild/ueventd.paz00.rc:root/ueventd.paz00.rc \
@@ -101,8 +100,7 @@ PRODUCT_PROPERTY_OVERRIDES := \
     wifi.interface=wlan0 \
     keyguard.no_require_sim=true \
     hwui.render_dirty_regions=false \
-    ro.sf.lcd_density=120
-
+    ro.sf.lcd_density=120 
 
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     ro.secure=0 \
@@ -141,10 +139,16 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     make_ext4fs
 
+# Force rotation to landscape, not clean solution
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+    ro.sf.hwrotation=270 \
+    ro.sf.fakerotation=true
+
 # Extra apps
 PRODUCT_PACKAGES += \
     FileManager \
-    dropbear
+    dropbear \
+    libmbm-ril 
 
 $(call inherit-product-if-exists, vendor/toshiba/paz00/device-vendor.mk)
 $(call inherit-product, frameworks/base/build/phone-hdpi-512-dalvik-heap.mk)

@@ -11,7 +11,7 @@ on init
 
 sysclktz 0
 
-loglevel 8
+loglevel 3
 
 # setup the global environment
     export PATH /sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin
@@ -416,7 +416,7 @@ service servicemanager /system/bin/servicemanager
     onrestart restart surfaceflinger
     onrestart restart drm
 
-service vold /system/xbin/strace -tt -o/data/vold.strace /system/bin/vold
+service vold /system/bin/vold
     class core
     socket vold stream 0660 root mount
     ioprio be 2
@@ -436,7 +436,8 @@ service ril-daemon /system/bin/rild
     user root
     group radio cache inet misc audio sdcard_rw qcom_oncrpc diag
 
-service surfaceflinger /system/xbin/strace -tt -o/data/sflinger.strace /system/bin/surfaceflinger
+#service surfaceflinger /system/xbin/strace -tt -o/data/sflinger.strace /system/bin/surfaceflinger
+service surfaceflinger /system/bin/surfaceflinger
     class main
     user system
     group graphics

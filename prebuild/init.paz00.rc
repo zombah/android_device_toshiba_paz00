@@ -22,7 +22,11 @@ on fs
     mount ext4 /dev/block/mmcblk0p6 /data wait noatime
     setprop ro.crypto.tmpfs_options size=128m,mode=0771,uid=1000,gid=1000
     mkdir /flexrom 0770 root system
-# install wifi modules 
+# Basic modules loading below
+# install wifi modules
+    insmod /system/lib/modules/cfg80211.ko
+    insmod /system/lib/modules/lib80211.ko
+    insmod /system/lib/modules/mac80211.ko 
     insmod /system/lib/modules/rt2x00lib.ko
     insmod /system/lib/modules/rt2x00usb.ko
     insmod /system/lib/modules/rt2800lib.ko
@@ -34,6 +38,25 @@ on fs
     insmod /system/lib/modules/v4l2-common.ko
     insmod /system/lib/modules/v4l2-int-device.ko
     insmod /system/lib/modules/uvcvideo.ko
+# install sound modules
+    insmod /system/lib/modules/snd.ko
+    insmod /system/lib/modules/snd-timer.ko
+    insmod /system/lib/modules/snd-page-alloc.ko
+    insmod /system/lib/modules/snd-pcm.ko
+    insmod /system/lib/modules/snd-soc-core.ko
+    insmod /system/lib/modules/snd-soc-tegra-pcm.ko
+    insmod /system/lib/modules/snd-soc-tegra-utils.ko
+    insmod /system/lib/modules/snd-soc-tegra20-das.ko
+    insmod /system/lib/modules/snd-soc-tegra20-i2s.ko
+    insmod /system/lib/modules/snd-soc-tegra-alc5632.ko
+    insmod /system/lib/modules/snd-soc-alc5632.ko
+# install modem modules
+    insmod /system/lib/modules/usbnet.ko
+    insmod /system/lib/modules/cdc_ether.ko
+    insmod /system/lib/modules/cdc-acm.ko
+    insmod /system/lib/modules/cdc-wdm.ko
+# install tun for vpns
+    insmod /system/lib/modules/tun.ko
 
 on post-fs-data
     mkdir /data/misc/wifi 0770 wifi wifi
@@ -103,6 +126,20 @@ on boot
     chmod 666 /dev/i2c-1
     chmod 666 /dev/i2c-3
 
+#zombah mbm-ril
+    write /sys/bus/usb/devices/1-1/power/autosuspend 2
+    write /sys/bus/usb/devices/1-1/power/control auto
+    write /sys/bus/usb/devices/1-1/power/wakeup enabled
+    write /sys/bus/usb/devices/2-1/power/autosuspend 2
+    write /sys/bus/usb/devices/2-1/power/control auto
+    write /sys/bus/usb/devices/2-1/power/wakeup enabled
+    symlink /dev/bus/usb/002/049 /dev/cdc-wdm0
+    symlink /dev/bus/usb/002/050 /dev/cdc-wdm1
+    chown system system /dev/cdc-wdm0
+    chmod 0666 /dev/cdc-wdm0
+    chown system system /dev/cdc-wdm1
+    chmod 0666 /dev/cdc-wdm1
+
     chown system system /sys/bus/i2c/drivers/lsm303dlh_a/0-0009/mode
     chown system system /sys/bus/i2c/drivers/lsm303dlh_a/0-0009/range
     chown system system /sys/bus/i2c/drivers/lsm303dlh_a/0-0009/rate
@@ -121,7 +158,7 @@ on boot
     write /sys/module/cpuidle/parameters/lp2_in_idle 1
 
 service wpa_supplicant /system/bin/wpa_supplicant \
-    -Dnl80211 -iwlan0 -d -c/data/misc/wifi/wpa_supplicant.conf
+    -Dnl80211 -iwlan0 -c/data/misc/wifi/wpa_supplicant.conf
 #   we will start as root and wpa_supplicant will switch to user wifi
 #   after setting up the capabilities required for WEXT
 #   user wifi

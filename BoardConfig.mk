@@ -47,7 +47,7 @@ BOARD_HAVE_BLUETOOTH 			:= true
 BOARD_HAVE_BLUETOOTH_BCM 		:= true
 #BOARD_HAVE_BLUETOOTH_CSR 		:= true
 
-BOARD_KERNEL_CMDLINE 			:= panic=10 video=tegrafb console=tty0,115200n8 no_console_suspend=1 tegraboot=sdmmc androidboot.hardware=paz00 tegrapart=recovery:300:a00:800,boot:d00:1000:800,mbr:1d00:200:800,system:1f00:25800:800,cache:27700:32000:800,misc:59700:400:800,store:59c00:9a600:800,userdata:f4300:df3500:800
+BOARD_KERNEL_CMDLINE 			:= mem=512M@0 panic=10 video=tegrafb console=tty0,115200n8 no_console_suspend=1 tegraboot=sdmmc androidboot.hardware=paz00 tegrapart=recovery:300:a00:800,boot:d00:1000:800,mbr:1d00:200:800,system:1f00:25800:800,cache:27700:32000:800,misc:59700:400:800,store:59c00:9a600:800,userdata:f4300:df3500:800
 
 BOARD_KERNEL_BASE 			:= 0x10000000
 BOARD_PAGE_SIZE 			:= 0x00000800
@@ -78,7 +78,7 @@ TARGET_USERIMAGES_SPARSE_EXT_DISABLED := true
 BOARD_HAS_NO_MISC_PARTITION 		:= true
 
 # dont build recovery
-TARGET_NO_RECOVERY 			:= true
+#TARGET_NO_RECOVERY 			:= true
 
 # Indicate that the board has an Internal SD Card
 #BOARD_HAS_SDCARD_INTERNAL 		:= true
