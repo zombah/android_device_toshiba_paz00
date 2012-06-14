@@ -1,26 +1,26 @@
-key 2 1
-key 3 2
-key 4 3
-key 5 4
-key 6 5
-key 7 6
-key 8 7
-key 9 8
-key 10 9
-key 11 0
-key 12 MINUS
-key 74    POWER              WAKE 
-key 158   ESCAPE                  WAKE
+key 2 	  1
+key 3 	  2
+key 4 	  3
+key 5 	  4
+key 6 	  5
+key 7 	  6
+key 8 	  7
+key 9 	  8
+key 10 	  9
+key 11 	  0
+key 12 	  MINUS
+key 74    POWER             WAKE 
+key 1     ESCAPE            WAKE
 key 59    MEDIA_PREVIOUS   
 key 60    MEDIA_PLAY_PAUSE 
 key 61    MEDIA_STOP    
 key 62    MEDIA_NEXT    
 key 63    TV                WAKE
 key 64    ZOOM_IN           WAKE
-key 65    ZOOM_OUT         WAKE
-key 66    SETTINGS                WAKE
-key 68    VOLUME_DOWN             WAKE
-key 87    VOLUME_UP               WAKE
+key 65    ZOOM_OUT          WAKE
+key 66    SETTINGS          WAKE
+key 68    VOLUME_DOWN       WAKE
+key 87    VOLUME_UP         WAKE
 key 88    VOLUME_MUTE
 key 99    CAMERA
 key 102   ENVELOPE

@@ -1,4 +1,4 @@
 rild.libpath=/system/lib/libmbm-ril.so
-rild.libargs=-d /dev/ttyACM1 -i rmnet0
+rild.libargs=-d /dev/ttyACM1 -i wwan0
 #rild.libpath=/system/lib/libhuaweigeneric-ril.so
 #rild.libargs=-d /dev/ttyUSB2
