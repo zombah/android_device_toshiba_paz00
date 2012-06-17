@@ -21,3 +21,4 @@
 # function: add_lunch_combo generic-eng
 
 add_lunch_combo full_paz00-userdebug
+add_lunch_combo cm_paz00-userdebug

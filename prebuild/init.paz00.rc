@@ -57,6 +57,11 @@ on fs
     insmod /system/lib/modules/cdc-wdm.ko
 # install tun for vpns
     insmod /system/lib/modules/tun.ko
+# install ppp modules
+    insmod /system/lib/modules/ppp_generic.ko
+    insmod /system/lib/modules/ppp_async.ko
+    insmod /system/lib/modules/ppp_deflate.ko
+    insmod /system/lib/modules/ppp_synctty.ko
 
 on post-fs-data
     mkdir /data/misc/wifi 0770 wifi wifi
@@ -109,7 +114,7 @@ on boot
     chmod 664 /sys/bus/i2c/drivers/mm_ak8975/0-000c/mode
     chmod 664 /sys/bus/i2c/drivers/mm_ak8975/0-000c/show_flux
 
-# zombah. old ones
+# zombah old ones
     # nvrm permissions
     chmod 666 /dev/nvrm
     chmod 660 /dev/knvrm
@@ -139,6 +144,11 @@ on boot
     chmod 0666 /dev/cdc-wdm0
     chown system system /dev/cdc-wdm1
     chmod 0666 /dev/cdc-wdm1
+
+#zombah pm debug
+    write /sys/module/wakelock/parameters/debug_mask 15
+    write /sys/module/userwakelock/parameters/debug_mask 15
+    write /sys/module/earlysuspend/parameters/debug_mask 15
 
     chown system system /sys/bus/i2c/drivers/lsm303dlh_a/0-0009/mode
     chown system system /sys/bus/i2c/drivers/lsm303dlh_a/0-0009/range
