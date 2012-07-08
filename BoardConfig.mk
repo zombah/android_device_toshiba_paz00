@@ -1,26 +1,32 @@
 # Camera Setup
-USE_CAMERA_STUB := false
+USE_CAMERA_STUB 			:= false
 
 # inherit from the proprietary version
 -include vendor/toshiba/paz00/BoardConfigVendor.mk
 
-TARGET_BOARD_PLATFORM := tegra
-TARGET_BOARD_INFO_FILE := device/toshiba/paz00/board-info.txt
-TARGET_CPU_ABI := armeabi-v7a
-TARGET_CPU_ABI2 := armeabi
-TARGET_ARCH_VARIANT := armv7-a
-TARGET_ARCH_VARIANT_CPU := cortex-a9
-TARGET_ARCH_VARIANT_FPU := vfpv3-d16
-TARGET_CPU_SMP := true
+TARGET_BOARD_PLATFORM 			:= tegra
+# Product overrides result image name
+#TARGET_PRODUCT				:= tegra
+TARGET_BOARD_INFO_FILE 			:= device/toshiba/paz00/board-info.txt
+TARGET_CPU_ABI 				:= armeabi-v7a
+TARGET_CPU_ABI2 			:= armeabi
+TARGET_ARCH_VARIANT 			:= armv7-a
+TARGET_ARCH_VARIANT_CPU 		:= cortex-a9
+TARGET_ARCH_VARIANT_FPU 		:= vfpv3-d16
+TARGET_CPU_SMP 				:= true
 
-TARGET_NO_BOOTLOADER := true
-TARGET_BOOTLOADER_BOARD_NAME := paz00
+TARGET_NO_BOOTLOADER 			:= true
+TARGET_BOOTLOADER_BOARD_NAME 		:= paz00
 
-ARCH_ARM_HAVE_TLS_REGISTER := true
+ARCH_ARM_HAVE_TLS_REGISTER 		:= true
+
+# Kernel
+TARGET_KERNEL_SOURCE 			:= kernel/toshiba/paz00
+TARGET_KERNEL_CONFIG 			:= paz00_android_defconfig
 
 #BOARD_USES_HGL := true
 #BOARD_USES_OVERLAY := true
-USE_OPENGL_RENDERER := true
+USE_OPENGL_RENDERER 			:= true
 
 # Modem
 TARGET_NO_RADIOIMAGE 			:= true
@@ -38,7 +44,6 @@ BOARD_WPA_SUPPLICANT_PRIVATE_LIB 	:= lib_driver_cmd_wl12xx
 BOARD_HOSTAPD_DRIVER 			:= NL80211
 BOARD_HOSTAPD_PRIVATE_LIB 		:= lib_driver_cmd_wl12xx
 BOARD_WLAN_DEVICE 			:= wlan0
-
 WIFI_DRIVER_MODULE_NAME                 := rt2800usb
 WIFI_DRIVER_MODULE_PATH                 := /system/lib/modules/rt2800usb.ko
 
@@ -47,17 +52,17 @@ BOARD_HAVE_BLUETOOTH 			:= true
 BOARD_HAVE_BLUETOOTH_BCM 		:= true
 #BOARD_HAVE_BLUETOOTH_CSR 		:= true
 
-BOARD_KERNEL_CMDLINE 			:= mem=512M@0 panic=10 video=tegrafb console=tty0,115200n8 no_console_suspend=1 initcall_debug tegraboot=sdmmc androidboot.hardware=paz00 tegrapart=recovery:300:a00:800,boot:d00:1000:800,mbr:1d00:200:800,system:1f00:25800:800,cache:27700:32000:800,misc:59700:400:800,store:59c00:9a600:800,userdata:f4300:df3500:800
+BOARD_KERNEL_CMDLINE 			:= mem=512M@0 panic=10 video=tegrafb console=tty0 console=ttyS0,115200n8 no_console_suspend=1 initcall_debug quite silent earlyprintk tegraboot=sdmmc androidboot.hardware=paz00 tegrapart=recovery:300:a00:800,boot:d00:1000:800,mbr:1d00:200:800,system:1f00:25800:800,cache:27700:32000:800,misc:59700:400:800,store:59c00:9a600:800,userdata:f4300:df3500:800
 
 BOARD_KERNEL_BASE 			:= 0x10000000
 BOARD_PAGE_SIZE 			:= 0x00000800
 
 # Audio
-BOARD_USES_ALSA_AUDIO			:= true
-BUILD_WITH_ALSA_UTILS			:= true
+BOARD_USES_ALSA_AUDIO			:= false
+BUILD_WITH_ALSA_UTILS			:= false
 BOARD_USES_GENERIC_AUDIO 		:= true
 BOARD_USES_AUDIO_LEGACY 		:= false
-TARGET_USES_OLD_LIBSENSORS_HAL 		:= false
+TARGET_USES_OLD_LIBSENSORS_HAL 		:= true
 
 BOARD_EGL_CFG 				:= device/toshiba/paz00/prebuild/egl.cfg
 TARGET_OTA_ASSERT_DEVICE 		:= paz00,ac100,GT-P7510
@@ -96,7 +101,7 @@ BOARD_VOLD_MAX_PARTITIONS 		:= 11
 BOARD_VOLD_EMMC_SHARES_DEV_MAJOR	:= false
 BOARD_VOLD_DISC_HAS_MULTIPLE_MAJORS	:= false
 
-BOARD_NO_ALLOW_DEQUEUE_CURRENT_BUFFER 	:= true
+BOARD_NO_ALLOW_DEQUEUE_CURRENT_BUFFER 	:= false
 
 # Use nicer font rendering
 BOARD_USE_SKIA_LCDTEXT 			:= true
