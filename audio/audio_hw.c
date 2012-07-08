@@ -71,6 +71,9 @@
 #define MIXER_I2S_OUT_CAPTURE_MUX			"I2SOut Mux"
 
 
+/* Audio device masks */
+#define AUDIO_DEVICE_OUT_HEADPHONE_MASK (AUDIO_DEVICE_OUT_WIRED_HEADPHONE | AUDIO_DEVICE_OUT_WIRED_HEADSET)
+
 /* ALSA card */
 #define CARD_SND 0
 
@@ -716,10 +719,10 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
 				(val & AUDIO_DEVICE_OUT_SPEAKER) ? 1 : 0);
 
 			mixer_ctl_set_value(adev->mixer_ctls.headset_switch, 0,
-				(val & AUDIO_DEVICE_OUT_WIRED_HEADPHONE) ? 1 : 0);
+                               (val & AUDIO_DEVICE_OUT_HEADPHONE_MASK) ? 1 : 0);
 				
 			LOGD("Headphone out:%c, Speaker out:%c, HDMI out:%c, BT SCO: %c\n",
-				(val & AUDIO_DEVICE_OUT_WIRED_HEADPHONE) ? 'Y' : 'N',
+                               (val & AUDIO_DEVICE_OUT_HEADPHONE_MASK) ? 'Y' : 'N',
 				(val & AUDIO_DEVICE_OUT_SPEAKER) ? 'Y' : 'N',
 				(val & AUDIO_DEVICE_OUT_AUX_DIGITAL) ? 'Y' : 'N',
 				(val & AUDIO_DEVICE_OUT_ALL_SCO) ? 'Y' : 'N'
@@ -1970,7 +1973,7 @@ static int adev_open(const hw_module_t* module, const char* name,
 	pthread_mutex_lock(&adev->lock);
 	set_route_by_array(adev->mixer, defaults, 1);
 	adev->mode = AUDIO_MODE_NORMAL;
-	adev->devices = AUDIO_DEVICE_OUT_SPEAKER | AUDIO_DEVICE_IN_BUILTIN_MIC | AUDIO_DEVICE_OUT_WIRED_HEADSET;
+       adev->devices = AUDIO_DEVICE_OUT_SPEAKER | AUDIO_DEVICE_IN_BUILTIN_MIC | AUDIO_DEVICE_OUT_HEADPHONE_MASK;
 
 	pthread_mutex_unlock(&adev->lock);
 
