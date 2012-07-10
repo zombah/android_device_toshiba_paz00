@@ -9,26 +9,25 @@ key 9 	  8
 key 10 	  9
 key 11 	  0
 key 12 	  MINUS
-key 74    POWER             WAKE 
+key 14 	  DEL
+key 116   POWER
 key 1     ESCAPE            WAKE
-key 59    MEDIA_PREVIOUS   
-key 60    MEDIA_PLAY_PAUSE 
-key 61    MEDIA_STOP    
-key 62    MEDIA_NEXT    
+key 59    MEDIA_PREVIOUS
+key 60    MEDIA_PLAY_PAUSE
+key 61    MEDIA_STOP
+key 62    MEDIA_NEXT
 key 63    TV                WAKE
 key 64    ZOOM_IN           WAKE
 key 65    ZOOM_OUT          WAKE
-key 66    SETTINGS          WAKE
 key 68    VOLUME_DOWN       WAKE
 key 87    VOLUME_UP         WAKE
 key 88    VOLUME_MUTE
 key 99    CAMERA
 key 102   ENVELOPE
-key 107   ENDCALL
+key 107   EXPLORER
 key 110   APP_SWITCH
-key 111   MENU
+key 111   FORWARD_DEL
 key 13    EQUALS
-key 14    DEL
 key 15    TAB
 key 16    Q
 key 17    W
