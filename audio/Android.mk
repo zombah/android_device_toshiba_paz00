@@ -11,6 +11,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
+ifeq ($(strip $(BOARD_USES_GENERIC_AUDIO)),true)
 
 LOCAL_PATH := $(call my-dir)
 
@@ -28,3 +30,4 @@ LOCAL_MODULE_TAGS := optional
 
 include $(BUILD_SHARED_LIBRARY)
 
+endif
