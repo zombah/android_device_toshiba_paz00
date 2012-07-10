@@ -14,14 +14,19 @@
 # limitations under the License.
 #
 
+# Base config files
 PRODUCT_COPY_FILES += \
+    device/toshiba/paz00/prebuild/init.rc:root/init.rc \
     device/toshiba/paz00/prebuild/init.paz00.rc:root/init.paz00.rc \
     device/toshiba/paz00/prebuild/init.nv_dev_board.usb.rc:root/init.nv_dev_board.usb.rc \
     device/toshiba/paz00/prebuild/init.local.rc:system/etc/init.local.rc \
+    device/toshiba/paz00/prebuild/init.sh:system/etc/init.sh \
+    device/toshiba/paz00/prebuild/init.paz00.sh:system/etc/init.paz00.sh \
     device/toshiba/paz00/prebuild/ueventd.paz00.rc:root/ueventd.paz00.rc \
     device/toshiba/paz00/prebuild/media_profiles.xml:system/etc/media_profiles.xml \
     device/toshiba/paz00/prebuild/egalax_i2c.idc:system/usr/idc/egalax_i2c.idc \
     device/toshiba/paz00/prebuild/egalax_ts.idc:system/usr/idc/egalax_ts.idc \
+    device/toshiba/paz00/prebuild/01NVOptimalization:system/etc/init.d/01NVOptimalization \
     frameworks/base/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
     frameworks/base/data/etc/android.hardware.camera.front.xml:system/etc/permissions/android.hardware.camera.front.xml \
     frameworks/base/data/etc/android.hardware.camera.xml:system/etc/permissions/android.hardware.camera.xml \
@@ -39,16 +44,16 @@ PRODUCT_COPY_FILES += \
 # Keychars
 # Keylayout
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/keychars/cpcap-key.kcm:system/usr/keychars/cpcap-key.kcm \
-    $(LOCAL_PATH)/keychars/gpio-keys.kcm:system/usr/keychars/gpio-keys.kcm \
-    $(LOCAL_PATH)/keychars/nvec_cir.kcm:system/usr/keychars/nvec_cir.kcm \
-    $(LOCAL_PATH)/keychars/nvec_keyboard.kcm:system/usr/keychars/nvec_keyboard.kcm \
-    $(LOCAL_PATH)/keychars/tegra-kbc.kcm:system/usr/keychars/tegra-kbc.kcm \
-    $(LOCAL_PATH)/keylayout/cpcap-key.kl:system/usr/keylayout/cpcap-key.kl \
-    $(LOCAL_PATH)/keylayout/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
-    $(LOCAL_PATH)/keylayout/nvec_cir.kl:system/usr/keylayout/nvec_cir.kl \
-    $(LOCAL_PATH)/keylayout/nvec_keyboard.kl:system/usr/keylayout/nvec_keyboard.kl \
-    $(LOCAL_PATH)/keylayout/tegra-kbc.kl:system/usr/keylayout/tegra-kbc.kl 
+    $(LOCAL_PATH)/keymaps/cpcap-key.kcm:system/usr/keychars/cpcap-key.kcm \
+    $(LOCAL_PATH)/keymaps/gpio-keys.kcm:system/usr/keychars/gpio-keys.kcm \
+    $(LOCAL_PATH)/keymaps/nvec_cir.kcm:system/usr/keychars/nvec_cir.kcm \
+    $(LOCAL_PATH)/keymaps/nvec_keyboard.kcm:system/usr/keychars/nvec_keyboard.kcm \
+    $(LOCAL_PATH)/keymaps/tegra-kbc.kcm:system/usr/keychars/tegra-kbc.kcm \
+    $(LOCAL_PATH)/keymaps/cpcap-key.kl:system/usr/keylayout/cpcap-key.kl \
+    $(LOCAL_PATH)/keymaps/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
+    $(LOCAL_PATH)/keymaps/nvec_cir.kl:system/usr/keylayout/nvec_cir.kl \
+    $(LOCAL_PATH)/keymaps/nvec_keyboard.kl:system/usr/keylayout/nvec_keyboard.kl \
+    $(LOCAL_PATH)/keymaps/tegra-kbc.kl:system/usr/keylayout/tegra-kbc.kl 
 
 # Vold
 PRODUCT_COPY_FILES += \
@@ -61,34 +66,13 @@ PRODUCT_COPY_FILES += \
 
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf
+    $(LOCAL_PATH)/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
+    $(LOCAL_PATH)/wifi/hostapd.conf:system/etc/wifi/hostapd.conf
 
 # Some files for 3G
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/ppp/ip-up:/system/etc/ppp/ip-up \
     $(LOCAL_PATH)/ppp/ip-down:/system/etc/ppp/ip-down
-
-# Alsa configs
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuild/asound.conf:/system/etc/asound.conf \
-    $(LOCAL_PATH)/prebuild/libasound.so:/system/lib/libasound.so \
-    $(LOCAL_PATH)/alsa/alsa.conf:/system/usr/share/alsa/alsa.conf \
-    $(LOCAL_PATH)/alsa/cards/aliases.conf:/system/usr/share/alsa/cards/aliases.conf \
-    $(LOCAL_PATH)/alsa/pcm/modem.conf:/system/usr/share/alsa/pcm/modem.conf \
-    $(LOCAL_PATH)/alsa/pcm/iec958.conf:/system/usr/share/alsa/pcm/iec958.conf \
-    $(LOCAL_PATH)/alsa/pcm/dpl.conf:/system/usr/share/alsa/pcm/dpl.conf \
-    $(LOCAL_PATH)/alsa/pcm/surround50.conf:/system/usr/share/alsa/pcm/surround50.conf \
-    $(LOCAL_PATH)/alsa/pcm/center_lfe.conf:/system/usr/share/alsa/pcm/center_lfe.conf \
-    $(LOCAL_PATH)/alsa/pcm/surround51.conf:/system/usr/share/alsa/pcm/surround51.conf \
-    $(LOCAL_PATH)/alsa/pcm/dsnoop.conf:/system/usr/share/alsa/pcm/dsnoop.conf \
-    $(LOCAL_PATH)/alsa/pcm/side.conf:/system/usr/share/alsa/pcm/side.conf \
-    $(LOCAL_PATH)/alsa/pcm/dmix.conf:/system/usr/share/alsa/pcm/dmix.conf \
-    $(LOCAL_PATH)/alsa/pcm/default.conf:/system/usr/share/alsa/pcm/default.conf \
-    $(LOCAL_PATH)/alsa/pcm/surround40.conf:/system/usr/share/alsa/pcm/surround40.conf \
-    $(LOCAL_PATH)/alsa/pcm/surround41.conf:/system/usr/share/alsa/pcm/surround41.conf \
-    $(LOCAL_PATH)/alsa/pcm/front.conf:/system/usr/share/alsa/pcm/front.conf \
-    $(LOCAL_PATH)/alsa/pcm/rear.conf:/system/usr/share/alsa/pcm/rear.conf \
-    $(LOCAL_PATH)/alsa/pcm/surround71.conf:/system/usr/share/alsa/pcm/surround71.conf
 
 PRODUCT_PACKAGES := \
     make_ext4fs \
@@ -144,11 +128,22 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     ro.sf.hwrotation=270 \
     ro.sf.fakerotation=true
 
+# Enable logcat logging into file
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+    debug.logcat=0
+
 # Extra apps
 PRODUCT_PACKAGES += \
     FileManager \
     dropbear \
-    libmbm-ril 
+    libmbm-ril \
+    VideoChatCameraTestApp \
+    RpcPerformance \
+    procstatlog \
+    alsamixer 
 
 $(call inherit-product-if-exists, vendor/toshiba/paz00/device-vendor.mk)
 $(call inherit-product, frameworks/base/build/phone-hdpi-512-dalvik-heap.mk)
+
+# Get the alsa files
+#$(call inherit-product-if-exists,hardware/libaudio/alsa.mk)
