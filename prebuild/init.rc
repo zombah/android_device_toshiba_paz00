@@ -11,7 +11,7 @@ on init
 
 sysclktz 0
 
-loglevel 3
+loglevel 8
 
 # setup the global environment
     export PATH /sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin
@@ -524,3 +524,20 @@ on property:service.adb.tcp.port=-1
     stop adbd
     start adbd
 
+# some stuff from android-x86
+service userinit /system/bin/sh /system/etc/init.sh
+    oneshot
+    disabled
+
+service logcat /system/bin/logcat -v time -f /data/log.txt
+    disabled
+    oneshot
+
+on property:dev.bootcomplete=1
+    start userinit
+
+on property:debug.logcat=1
+    start logcat
+
+on property:debug.logcat=0
+    stop logcat
