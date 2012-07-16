@@ -147,11 +147,6 @@ on boot
     chown system system /dev/cdc-wdm1
     chmod 0666 /dev/cdc-wdm1
 
-#zombah pm debug
-    write /sys/module/wakelock/parameters/debug_mask 15
-    write /sys/module/userwakelock/parameters/debug_mask 15
-    write /sys/module/earlysuspend/parameters/debug_mask 15
-
     chown system system /sys/bus/i2c/drivers/lsm303dlh_a/0-0009/mode
     chown system system /sys/bus/i2c/drivers/lsm303dlh_a/0-0009/range
     chown system system /sys/bus/i2c/drivers/lsm303dlh_a/0-0009/rate

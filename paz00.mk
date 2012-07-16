@@ -27,6 +27,7 @@ PRODUCT_COPY_FILES += \
     device/toshiba/paz00/prebuild/egalax_i2c.idc:system/usr/idc/egalax_i2c.idc \
     device/toshiba/paz00/prebuild/egalax_ts.idc:system/usr/idc/egalax_ts.idc \
     device/toshiba/paz00/prebuild/01NVOptimalization:system/etc/init.d/01NVOptimalization \
+    device/toshiba/paz00/prebuild/02PmDebug:system/etc/init.d/02PmDebug \
     frameworks/base/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
     frameworks/base/data/etc/android.hardware.camera.front.xml:system/etc/permissions/android.hardware.camera.front.xml \
     frameworks/base/data/etc/android.hardware.camera.xml:system/etc/permissions/android.hardware.camera.xml \
