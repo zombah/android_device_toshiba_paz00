@@ -24,6 +24,7 @@ PRODUCT_COPY_FILES += \
     device/toshiba/paz00/prebuild/init.paz00.sh:system/etc/init.paz00.sh \
     device/toshiba/paz00/prebuild/ueventd.paz00.rc:root/ueventd.paz00.rc \
     device/toshiba/paz00/prebuild/media_profiles.xml:system/etc/media_profiles.xml \
+    device/toshiba/paz00/prebuild/excluded-input-devices.xml:system/etc/excluded-input-devices.xml \
     device/toshiba/paz00/prebuild/egalax_i2c.idc:system/usr/idc/egalax_i2c.idc \
     device/toshiba/paz00/prebuild/egalax_ts.idc:system/usr/idc/egalax_ts.idc \
     device/toshiba/paz00/prebuild/01NVOptimalization:system/etc/init.d/01NVOptimalization \
