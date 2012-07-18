@@ -64,6 +64,9 @@ on fs
     insmod /system/lib/modules/ppp_async.ko
     insmod /system/lib/modules/ppp_deflate.ko
     insmod /system/lib/modules/ppp_synctty.ko
+# install additional modules
+    insmod /system/lib/modules/lm90.ko
+    insmod /system/lib/modules/tegra_wdt.ko
 
 on post-fs-data
     mkdir /data/misc/wifi 0770 wifi wifi
