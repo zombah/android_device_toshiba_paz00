@@ -146,4 +146,7 @@ based on the hardware -->
      -->
     <integer name="config_longPressOnPowerBehavior">2</integer>
 
+    <!-- Device has a h/w rotation lock switch -->
+    <bool name="config_hasRotationLockSwitch">true</bool>
+
 </resources>
