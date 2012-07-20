@@ -5,7 +5,7 @@ USE_CAMERA_STUB 			:= false
 -include vendor/toshiba/paz00/BoardConfigVendor.mk
 
 TARGET_BOARD_PLATFORM 			:= tegra
-# Product overrides result image name
+# Product set overrides result image name
 #TARGET_PRODUCT				:= tegra
 TARGET_BOARD_INFO_FILE 			:= device/toshiba/paz00/board-info.txt
 TARGET_CPU_ABI 				:= armeabi-v7a
@@ -52,7 +52,7 @@ BOARD_HAVE_BLUETOOTH 			:= true
 BOARD_HAVE_BLUETOOTH_BCM 		:= true
 #BOARD_HAVE_BLUETOOTH_CSR 		:= true
 
-BOARD_KERNEL_CMDLINE 			:= mem=512M@0 panic=10 video=tegrafb console=tty0 console=ttyS0,115200n8 no_console_suspend=1 tegraboot=sdmmc androidboot.hardware=paz00 tegrapart=recovery:300:a00:800,boot:d00:1000:800,mbr:1d00:200:800,system:1f00:25800:800,cache:27700:32000:800,misc:59700:400:800,store:59c00:9a600:800,userdata:f4300:df3500:800
+BOARD_KERNEL_CMDLINE 			:= panic=10 video=tegrafb console=tty0 console=ttyS0,115200n8 no_console_suspend=1 earlyprintk tegraboot=sdmmc androidboot.hardware=paz00 tegrapart=recovery:300:a00:800,boot:d00:1000:800,mbr:1d00:200:800,system:1f00:25800:800,cache:27700:32000:800,misc:59700:400:800,store:59c00:9a600:800,userdata:f4300:df3500:800
 
 BOARD_KERNEL_BASE 			:= 0x10000000
 BOARD_PAGE_SIZE 			:= 0x00000800
@@ -62,7 +62,7 @@ BOARD_USES_ALSA_AUDIO			:= false
 BUILD_WITH_ALSA_UTILS			:= false
 BOARD_USES_GENERIC_AUDIO 		:= true
 BOARD_USES_AUDIO_LEGACY 		:= false
-TARGET_USES_OLD_LIBSENSORS_HAL 		:= true
+TARGET_USES_OLD_LIBSENSORS_HAL 		:= false
 
 BOARD_EGL_CFG 				:= device/toshiba/paz00/prebuild/egl.cfg
 TARGET_OTA_ASSERT_DEVICE 		:= paz00,ac100,GT-P7510
@@ -98,22 +98,15 @@ BOARD_HAS_NO_SELECT_BUTTON 		:= true
 
 # Vold settings
 BOARD_VOLD_MAX_PARTITIONS 		:= 11
-BOARD_VOLD_EMMC_SHARES_DEV_MAJOR	:= false
-BOARD_VOLD_DISC_HAS_MULTIPLE_MAJORS	:= false
 
-BOARD_NO_ALLOW_DEQUEUE_CURRENT_BUFFER 	:= false
+BOARD_NO_ALLOW_DEQUEUE_CURRENT_BUFFER 	:= true
 
 # Use nicer font rendering
 BOARD_USE_SKIA_LCDTEXT 			:= true
 
-# test
-USE_E2FSPROGS				:= true
-BOARD_HAVE_GPS				:= false
-#PRODUCT_CHARACTERISTICS		 := tablet
-BOARD_USES_SECURE_SERVICES		:= true
+# skip doc from building
 BOARD_SKIP_ANDROID_DOC_BUILD		:= true
-TARGET_HAS_THIRD_PARTY_APPS		:= true
 
-# libsensor from android-x86
-BOARD_USES_KBDSENSOR 			:= false
-BOARD_USES_KBDSENSOR_ROTKEY1		:= false
+# kbd libsensor from android-x86
+BOARD_USES_KBDSENSOR 			:= true
+BOARD_USES_KBDSENSOR_ROTKEY2		:= true

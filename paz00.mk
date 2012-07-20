@@ -16,12 +16,9 @@
 
 # Base config files
 PRODUCT_COPY_FILES += \
-    device/toshiba/paz00/prebuild/init.rc:root/init.rc \
     device/toshiba/paz00/prebuild/init.paz00.rc:root/init.paz00.rc \
     device/toshiba/paz00/prebuild/init.nv_dev_board.usb.rc:root/init.nv_dev_board.usb.rc \
     device/toshiba/paz00/prebuild/init.local.rc:system/etc/init.local.rc \
-    device/toshiba/paz00/prebuild/init.sh:system/etc/init.sh \
-    device/toshiba/paz00/prebuild/init.paz00.sh:system/etc/init.paz00.sh \
     device/toshiba/paz00/prebuild/ueventd.paz00.rc:root/ueventd.paz00.rc \
     device/toshiba/paz00/prebuild/media_profiles.xml:system/etc/media_profiles.xml \
     device/toshiba/paz00/prebuild/excluded-input-devices.xml:system/etc/excluded-input-devices.xml \
@@ -75,6 +72,27 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/ppp/ip-up:/system/etc/ppp/ip-up \
     $(LOCAL_PATH)/ppp/ip-down:/system/etc/ppp/ip-down
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/prebuild/asound.conf:/system/etc/asound.conf \
+    $(LOCAL_PATH)/prebuild/libasound.so:/system/lib/libasound.so \
+    $(LOCAL_PATH)/alsa/alsa.conf:/system/usr/share/alsa/alsa.conf \
+    $(LOCAL_PATH)/alsa/cards/aliases.conf:/system/usr/share/alsa/cards/aliases.conf \
+    $(LOCAL_PATH)/alsa/pcm/modem.conf:/system/usr/share/alsa/pcm/modem.conf \
+    $(LOCAL_PATH)/alsa/pcm/iec958.conf:/system/usr/share/alsa/pcm/iec958.conf \
+    $(LOCAL_PATH)/alsa/pcm/dpl.conf:/system/usr/share/alsa/pcm/dpl.conf \
+    $(LOCAL_PATH)/alsa/pcm/surround50.conf:/system/usr/share/alsa/pcm/surround50.conf \
+    $(LOCAL_PATH)/alsa/pcm/center_lfe.conf:/system/usr/share/alsa/pcm/center_lfe.conf \
+    $(LOCAL_PATH)/alsa/pcm/surround51.conf:/system/usr/share/alsa/pcm/surround51.conf \
+    $(LOCAL_PATH)/alsa/pcm/dsnoop.conf:/system/usr/share/alsa/pcm/dsnoop.conf \
+    $(LOCAL_PATH)/alsa/pcm/side.conf:/system/usr/share/alsa/pcm/side.conf \
+    $(LOCAL_PATH)/alsa/pcm/dmix.conf:/system/usr/share/alsa/pcm/dmix.conf \
+    $(LOCAL_PATH)/alsa/pcm/default.conf:/system/usr/share/alsa/pcm/default.conf \
+    $(LOCAL_PATH)/alsa/pcm/surround40.conf:/system/usr/share/alsa/pcm/surround40.conf \
+    $(LOCAL_PATH)/alsa/pcm/surround41.conf:/system/usr/share/alsa/pcm/surround41.conf \
+    $(LOCAL_PATH)/alsa/pcm/front.conf:/system/usr/share/alsa/pcm/front.conf \
+    $(LOCAL_PATH)/alsa/pcm/rear.conf:/system/usr/share/alsa/pcm/rear.conf \
+    $(LOCAL_PATH)/alsa/pcm/surround71.conf:/system/usr/share/alsa/pcm/surround71.conf
 
 PRODUCT_PACKAGES := \
     make_ext4fs \
@@ -130,10 +148,6 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     ro.sf.hwrotation=270 \
     ro.sf.fakerotation=true
 
-# Enable logcat logging into file
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    debug.logcat=0
-
 # Extra apps
 PRODUCT_PACKAGES += \
     FileManager \
@@ -142,10 +156,8 @@ PRODUCT_PACKAGES += \
     VideoChatCameraTestApp \
     RpcPerformance \
     procstatlog \
-    alsamixer 
+    sensors.tegra 
 
 $(call inherit-product-if-exists, vendor/toshiba/paz00/device-vendor.mk)
 $(call inherit-product, frameworks/base/build/phone-hdpi-512-dalvik-heap.mk)
 
-# Get the alsa files
-#$(call inherit-product-if-exists,hardware/libaudio/alsa.mk)
