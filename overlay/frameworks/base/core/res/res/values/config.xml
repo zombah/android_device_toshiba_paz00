@@ -139,4 +139,11 @@ based on the hardware -->
     <!-- Component name of the service providing geocoder API support. -->
     <string name="config_geocodeProviderPackageName">com.google.android.location.GeocodeProvider</string>
 
+     <!-- Control the behavior when the user long presses the power button.
+     	0 - Nothing
+     	1 - Global actions menu
+     	2 - Power off (with confirmation)
+     -->
+    <integer name="config_longPressOnPowerBehavior">2</integer>
+
 </resources>
