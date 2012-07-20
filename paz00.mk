@@ -130,6 +130,7 @@ PRODUCT_PACKAGES += \
     libhuaweigeneric-ril \
     audio.primary.tegra \
     audio.a2dp.default \
+    audio.usb.default \
     FolioParts \
     wmiconfig
 
