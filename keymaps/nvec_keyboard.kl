@@ -70,7 +70,7 @@ key 54    SHIFT_RIGHT	    WAKE
 key 104   PAGE_UP	    WAKE
 key 109   PAGE_DOWN	    WAKE
 key 29    CTRL_LEFT	    WAKE
-key 217   SEARCH            WAKE
+key 217   ASSIST            WAKE
 key 125   HOME		    WAKE
 key 56    ALT_LEFT	    WAKE
 key 41    GRAVE		    WAKE
