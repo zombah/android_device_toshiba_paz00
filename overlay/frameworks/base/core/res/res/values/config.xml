@@ -42,25 +42,26 @@
     <bool name="config_showNavigationBar">false</bool>
 
     <!-- If this is true, the screen will come on when you unplug usb/power/whatever. -->
-    <bool name="config_unplugTurnsOnScreen">true</bool>
+    <bool name="config_unplugTurnsOnScreen">false</bool>
 
     <!-- Values greater or equal to 0 will enable electronbeam screen-on
          animation with the specified delay (in milliseconds), -1 will disable the animation -->
-    <integer name="config_screenOnAnimation">-1</integer>
+    <!-- <integer name="config_screenOnAnimation">-1</integer> -->
 
     <!-- True will enable the electron beam screen-off animation. -->
-    <bool name="config_screenOffAnimation">false</bool>
+    <bool name="config_screenOffAnimation">true</bool>
 
     <!-- Enable datausage threshhold in the Settings -> Data usage menu -->
     <string name="config_datause_iface">wlan0</string>
 
+    <!-- Indicate whether the SD card is accessible without removing the battery. -->
     <bool name="config_batterySdCardAccessibility">true</bool>
 
     <!-- Flag indicating whether the surface flinger has limited
          alpha compositing functionality in hardware. If set, the window
          manager will disable alpha trasformation in animations where not
          strictly needed. -->
-    <bool name="config_sf_limitedAlpha">true</bool>
+    <bool name="config_sf_limitedAlpha">false</bool>
  
    <!-- If true, the screen can be rotated via the accelerometer in all 4
         rotations as the default behavior. -->
@@ -92,6 +93,9 @@
         <item>"bnep\\d"</item>
     </string-array>
 
+    <!-- Array of ConnectivityManager.TYPE_xxxx values allowable for tethering -->
+    <!-- Common options are [1, 4] for TYPE_WIFI and TYPE_MOBILE_DUN or
+    <!== [0,1,5,7] for TYPE_MOBILE, TYPE_WIFI, TYPE_MOBILE_HIPRI and TYPE_BLUETOOTH -->
     <integer-array translatable="false" name="config_tether_upstream_types">
 	<item>0</item>
 	<item>1</item>
@@ -123,10 +127,9 @@
     </string-array>
 
     <!-- This string array should be overridden by the device to present a list of radio
-attributes. This is used by the connectivity manager to decide which networks can coexist
-based on the hardware -->
-    <!-- An Array of "[ConnectivityManager connectionType],
-[# simultaneous connection types]" -->
+       attributes. This is used by the connectivity manager to decide which networks can coexist
+       based on the hardware -->
+    <!-- An Array of "[ConnectivityManager connectionType],[# simultaneous connection types]" -->
     <string-array translatable="false" name="radioAttributes">
 	<item>"1,1"</item>
 	<item>"0,1"</item>
@@ -134,10 +137,21 @@ based on the hardware -->
     </string-array>
 
     <!-- Component name of the service providing network location support. -->
-    <string name="config_networkLocationProviderPackageName">com.google.android.location.NetworkLocationProvider</string>
+    <string name="config_networkLocationProvider">com.google.android.location.NetworkLocationProvider</string>
 
     <!-- Component name of the service providing geocoder API support. -->
-    <string name="config_geocodeProviderPackageName">com.google.android.location.GeocodeProvider</string>
+    <string name="config_geocodeProvider">com.google.android.location.GeocodeProvider</string>
+
+     <!-- Diable lockscreen rotation by default -->                                                                          <bool name="config_enableLockScreenRotation">false</bool>
+
+     <!-- The number of degrees to rotate the display when the keyboard is open. -->
+     <integer name="config_lidOpenRotation">0</integer>
+
+     <!-- Sets whether menu shortcuts should be displayed on panel menus when 
+          a keyboard is present. -->
+     <bool name="config_showMenuShortcutsWhenKeyboardPresent">true</bool>
+
+     <!-- Whether to set a system prop (sys.orientation.landscape)                                                                when rotating for devices that have rotating buttons -->                                                           <bool name="config_setLandscapeProp">true</bool>
 
      <!-- Control the behavior when the user long presses the power button.
      	0 - Nothing
@@ -146,7 +160,35 @@ based on the hardware -->
      -->
     <integer name="config_longPressOnPowerBehavior">2</integer>
 
-    <!-- Device has a h/w rotation lock switch -->
-    <bool name="config_hasRotationLockSwitch">true</bool>
+       <!-- List of file paths for USB host busses to exclude from USB host support.
+          For example, if the first USB bus on the device is used to communicate
+          with the modem or some other restricted hardware, add "/dev/bus/usb/001/"
+          to this list.  If this is empty, no parts of the host USB bus will be excluded.
+       -->
+    <string-array name="config_usbHostBlacklist">
+    </string-array>
+    
+    <!-- Regex of wired ethernet ifaces -->
+    <string translatable="false" name="config_ethernet_iface_regex">eth\\d</string>
 
+    <!-- Control the behavior when the user long presses the home button.
+           0 - Nothing
+           1 - Recent apps dialog
+           2 - Recent apps view in SystemUI
+       This needs to match the constants in
+       policy/src/com/android/internal/policy/impl/PhoneWindowManager.java
+    -->
+    <integer name="config_longPressOnHomeBehavior">2</integer>
+
+    <!-- Hardware 'face' keys present on the device, stored as a bit field.
+       This integer should equal the sum of the corresponding value for each
+       of the following keys present:
+           1 - Home
+           2 - Back
+           4 - Menu
+           8 - Search
+           16 - App switch
+       For example, a device with Home, Back and Menu keys would set this
+       config to 7. -->
+    <integer name="config_deviceHardwareKeys">31</integer>
 </resources>
