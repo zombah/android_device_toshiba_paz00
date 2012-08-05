@@ -146,7 +146,6 @@ based on the hardware -->
      -->
     <integer name="config_longPressOnPowerBehavior">2</integer>
 
-    <!-- Device has a h/w rotation lock switch -->
-    <bool name="config_hasRotationLockSwitch">true</bool>
-
+    <!-- The number of degrees to rotate the display when the keyboard is open. -->
+     <integer name="config_lidOpenRotation">0</integer>
 </resources>
