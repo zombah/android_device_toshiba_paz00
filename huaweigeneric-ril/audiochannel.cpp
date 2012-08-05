@@ -166,13 +166,14 @@ static void AndroidRecorderCallback(int event, void* userData, void* info)
     return;
 
 on_break:
-    LOGD("Record thread stopped");
+	ALOGD("Record thread stopped");
     ctx->rec_thread_exited = 1;
     return;
 }
 
 static void AndroidPlayerCallback( int event, void* userData, void* info)
 {
+
     unsigned nsamples_req;
     void *output;
     struct GsmAudioTunnel *ctx = (struct GsmAudioTunnel*) userData;
@@ -238,7 +239,7 @@ static void AndroidPlayerCallback( int event, void* userData, void* info)
     return;
 
 on_break:
-    LOGD("Play thread stopped");
+	ALOGD("Play thread stopped");
     ctx->play_thread_exited = 1;
     return;
 }
@@ -248,7 +249,7 @@ on_break:
 int gsm_audio_tunnel_start(struct GsmAudioTunnel *ctx,const char* gsmvoicechannel,unsigned int sampling_rate,unsigned int frame_size,unsigned int bits_per_sample)
 {
     struct termios newtio;
-    int format = (bits_per_sample > 8)
+	audio_format_t format = (bits_per_sample > 8) 
         ? AUDIO_FORMAT_PCM_16_BIT
         : AUDIO_FORMAT_PCM_8_BIT;
 
@@ -262,13 +263,13 @@ int gsm_audio_tunnel_start(struct GsmAudioTunnel *ctx,const char* gsmvoicechanne
     ctx->frame_size = frame_size;
     ctx->bits_per_sample = bits_per_sample;
 
-    LOGD("Opening GSM voice channel '%s', sampling_rate:%u hz, frame_size:%u, bits_per_sample:%u  ...",
+	ALOGD("Opening GSM voice channel '%s', sampling_rate:%u hz, frame_size:%u, bits_per_sample:%u  ...",
         gsmvoicechannel,sampling_rate,frame_size,bits_per_sample);
 
     // Open the device(com port) to be non-blocking (read will return immediately)
     ctx->fd = open(gsmvoicechannel, O_RDWR | O_NOCTTY | O_NDELAY | O_NONBLOCK);
     if (ctx->fd < 0) {
-        LOGE("Could not open '%s'",gsmvoicechannel);
+		ALOGE("Could not open '%s'",gsmvoicechannel);
         return -1;
     }
 
@@ -282,7 +283,7 @@ int gsm_audio_tunnel_start(struct GsmAudioTunnel *ctx,const char* gsmvoicechanne
     newtio.c_cc[VTIME]=5;   // You may want to tweak this; 5 = 1/2 second, 10 = 1 second
     tcsetattr(ctx->fd,TCSANOW, &newtio);
 
-    LOGD("Creating streams....");
+	ALOGD("Creating streams....");
     ctx->rec_buf = malloc(ctx->frame_size * (ctx->bits_per_sample/8));
     if (!ctx->rec_buf) {
         close(ctx->fd);
@@ -310,7 +311,7 @@ int gsm_audio_tunnel_start(struct GsmAudioTunnel *ctx,const char* gsmvoicechanne
     // Create audio record channel
     ctx->rec_strm = new android::AudioRecord();
     if(!ctx->rec_strm) {
-        LOGE("fail to create audio record");
+		ALOGE("fail to create audio record");
         free(ctx->play_buf);
         free(ctx->rec_buf);
         close(ctx->fd);
@@ -325,7 +326,7 @@ int gsm_audio_tunnel_start(struct GsmAudioTunnel *ctx,const char* gsmvoicechanne
                     format,
                     AUDIO_CHANNEL_IN_MONO,
                     inputBuffSize,
-                    0,                  //flags
+					android::AudioRecord::RECORD_AGC_ENABLE, 	//flags
                     &AndroidRecorderCallback,
                     (void *) ctx,
                     (inputBuffSize / 2), // Notification frames
@@ -333,7 +334,7 @@ int gsm_audio_tunnel_start(struct GsmAudioTunnel *ctx,const char* gsmvoicechanne
                     0);
 
     if(create_result != android::NO_ERROR){
-        LOGE("fail to check audio record : error code %d", create_result);
+		ALOGE("fail to check audio record : error code %d", create_result);
         delete ((android::AudioRecord*)ctx->rec_strm);
         free(ctx->play_buf);
         free(ctx->rec_buf);
@@ -342,7 +343,7 @@ int gsm_audio_tunnel_start(struct GsmAudioTunnel *ctx,const char* gsmvoicechanne
     }
 
     if(((android::AudioRecord*)ctx->rec_strm)->initCheck() != android::NO_ERROR) {
-        LOGE("fail to check audio record : buffer size is : %d, error code : %d", inputBuffSize, ((android::AudioRecord*)ctx->rec_strm)->initCheck() );
+		ALOGE("fail to check audio record : buffer size is : %d, error code : %d", inputBuffSize, ((android::AudioRecord*)ctx->rec_strm)->initCheck() );
         delete ((android::AudioRecord*)ctx->rec_strm);
         free(ctx->play_buf);
         free(ctx->rec_buf);
@@ -353,7 +354,7 @@ int gsm_audio_tunnel_start(struct GsmAudioTunnel *ctx,const char* gsmvoicechanne
     // Create audio playback channel
     ctx->play_strm = new android::AudioTrack();
     if(!ctx->play_strm) {
-        LOGE("Failed to create AudioTrack");
+		ALOGE("Failed to create AudioTrack");
         delete ((android::AudioRecord*)ctx->rec_strm);
         free(ctx->play_buf);
         free(ctx->rec_buf);
@@ -368,7 +369,7 @@ int gsm_audio_tunnel_start(struct GsmAudioTunnel *ctx,const char* gsmvoicechanne
                     format,
                     AUDIO_CHANNEL_OUT_MONO, //For now this is mono (we expect 1)
                     inputBuffSize,
-                    0, //flags
+					AUDIO_OUTPUT_FLAG_NONE, //flags
                     &AndroidPlayerCallback,
                     (void *) ctx,
                     (inputBuffSize / 2),
@@ -377,7 +378,7 @@ int gsm_audio_tunnel_start(struct GsmAudioTunnel *ctx,const char* gsmvoicechanne
                     0);
 
     if(create_result != android::NO_ERROR){
-        LOGE("fail to check audio record : error code %d", create_result);
+		ALOGE("fail to check audio record : error code %d", create_result);
         delete ((android::AudioTrack*)ctx->play_strm);
         delete ((android::AudioRecord*)ctx->rec_strm);
         free(ctx->play_buf);
@@ -387,7 +388,7 @@ int gsm_audio_tunnel_start(struct GsmAudioTunnel *ctx,const char* gsmvoicechanne
     }
 
     if(((android::AudioTrack*)ctx->play_strm)->initCheck() != android::NO_ERROR) {
-        LOGE("fail to check audio playback : buffer size is : %d, error code : %d", inputBuffSize, ((android::AudioTrack*)ctx->play_strm)->initCheck() );
+		ALOGE("fail to check audio playback : buffer size is : %d, error code : %d", inputBuffSize, ((android::AudioTrack*)ctx->play_strm)->initCheck() );
         delete ((android::AudioTrack*)ctx->play_strm);
         delete ((android::AudioRecord*)ctx->rec_strm);
         free(ctx->play_buf);
@@ -403,7 +404,7 @@ int gsm_audio_tunnel_start(struct GsmAudioTunnel *ctx,const char* gsmvoicechanne
     //                      android::AudioSystem::ROUTE_EARPIECE,
     //                      android::AudioSystem::ROUTE_ALL);
 
-    LOGD("Starting streaming...");
+	ALOGD("Starting streaming...");
 
     if (ctx->play_strm) {
         ((android::AudioTrack*)ctx->play_strm)->start();
@@ -413,7 +414,7 @@ int gsm_audio_tunnel_start(struct GsmAudioTunnel *ctx,const char* gsmvoicechanne
         ((android::AudioRecord*)ctx->rec_strm)->start();
     }
 
-    LOGD("Done");
+	ALOGD("Done");
 
     ctx->running = 1;
 
@@ -431,7 +432,7 @@ int gsm_audio_tunnel_stop(struct GsmAudioTunnel *ctx)
         return 0;
 
 
-    LOGD("Will Stop ctx, wait for all audio callback clean");
+	ALOGD("Will Stop ctx, wait for all audio callback clean");
     ctx->quit_flag = 1;
     for (i=0; !ctx->rec_thread_exited && i<100; ++i){
         usleep(100000);
@@ -443,7 +444,7 @@ int gsm_audio_tunnel_stop(struct GsmAudioTunnel *ctx)
     // After all sleep for 0.1 seconds since android device can be slow
     usleep(100000);
 
-    LOGD("Stopping ctx..");
+	ALOGD("Stopping ctx..");
     if (ctx->rec_strm) {
         ((android::AudioRecord*)ctx->rec_strm)->stop();
     }
@@ -458,7 +459,7 @@ int gsm_audio_tunnel_stop(struct GsmAudioTunnel *ctx)
     //                      android::AudioSystem::ROUTE_ALL);
 
 
-    LOGD("Closing streaming");
+	ALOGD("Closing streaming");
 
     if (ctx->play_strm) {
         delete ((android::AudioTrack*)ctx->play_strm);
@@ -476,6 +477,7 @@ int gsm_audio_tunnel_stop(struct GsmAudioTunnel *ctx)
     close(ctx->fd);
     memset(ctx,0,sizeof(struct GsmAudioTunnel));
 
-    LOGD("Done");
+	ALOGD("Done");
     return 0;
 }
+

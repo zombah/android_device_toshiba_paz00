@@ -231,7 +231,7 @@ Fail:
 int
 sms_address_from_bytes( SmsAddress  address, const unsigned char*  buf, int  buflen )
 {
-    int   len = sizeof(address->data), num_digits;
+    unsigned int len = sizeof(address->data), num_digits;
 
     if (buflen < 2)
         return -1;
@@ -357,8 +357,8 @@ sms_get_sc_address( cbytes_t   *pcur,
     int       result = -1;
 
     if (cur < end) {
-        int  len = cur[0];
-        int  dlen, adjust = 0;
+        unsigned int  len = cur[0];
+        unsigned int  dlen, adjust = 0;
 
         cur += 1;
 
@@ -438,7 +438,7 @@ sms_get_address( cbytes_t   *pcur,
 {
     cbytes_t  cur    = *pcur;
     int       result = -1;
-    int       len, dlen;
+    unsigned int len, dlen;
 
     if (cur >= end)
         goto Exit;
@@ -1065,7 +1065,7 @@ smspdu_create_from_hex( const char*  hex, int  hexlen )
         goto Exit;
     }
 
-    gsm_hex_to_bytes( hex, hexlen, p->base );
+    gsm_hex_to_bytes((cbytes_t) hex, hexlen, p->base );
     p->end = p->base + (hexlen+1)/2;
 
     data = p->base;

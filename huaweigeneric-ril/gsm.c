@@ -171,7 +171,7 @@ gsm_hex_to_bytes( cbytes_t  hex, int  hexlen, bytes_t  dst )
     int  nn;
 
     for (nn = 0; nn < hexlen/2; nn++ ) {
-        dst[nn] = (byte_t) gsm_hex2_to_byte0( hex+2*nn );
+        dst[nn] = (byte_t) gsm_hex2_to_byte0( (char const*) hex+2*nn );
     }
     if (hexlen & 1) {
         dst[nn] = gsm_hexchar_to_int0( hex[2*nn] ) << 4;
@@ -282,7 +282,8 @@ gsm_rope_can_grow( GsmRope  rope, int  count )
     if (!rope->data || rope->error)
         return 0;
 
-    if (rope->pos + count > rope->max) {
+    if (rope->pos + count > rope->max)
+    {
         if (rope->data == NULL)
             rope->max = rope->pos + count;
 
@@ -316,7 +317,8 @@ gsm_rope_reserve( GsmRope  rope, int  count )
 {
     void*  result = NULL;
 
-    if (gsm_rope_can_grow(rope, count)) {
+    if (gsm_rope_can_grow(rope, count))
+    {
         if (rope->data != NULL)
             result = rope->data + rope->pos;
     }
@@ -1100,7 +1102,7 @@ sim_adn_record_from_bytes( SimAdnRecord  rec, cbytes_t  data, int  len )
     /* alpha is optional */
     if (len > ADN_FOOTER_SIZE) {
         cbytes_t  dataend = data + len - ADN_FOOTER_SIZE;
-        int       count   = sim_adn_alpha_to_utf8(data, dataend, NULL);
+        unsigned int count = sim_adn_alpha_to_utf8(data, dataend, NULL);
 
         if (count > sizeof(rec->adn.alpha)-1)  /* too long */
             return -1;
@@ -1116,7 +1118,7 @@ sim_adn_record_from_bytes( SimAdnRecord  rec, cbytes_t  data, int  len )
     /* decode TON and number to ASCII, NOTE: this is lossy !! */
     {
         int      ton    = footer[ADN_OFFSET_TON_NPI];
-        bytes_t  number = rec->adn.number;
+        bytes_t  number = (bytes_t) rec->adn.number;
         int      len    = sizeof(rec->adn.number)-1;
         int      count;
 
@@ -1141,13 +1143,13 @@ sim_adn_record_to_bytes( SimAdnRecord  rec, bytes_t   data, int  datalen )
     bytes_t   end    = data + datalen;
     bytes_t   footer = end - ADN_FOOTER_SIZE;
     int       ton    = 0x81;
-    cbytes_t  number = rec->adn.number;
+    cbytes_t  number = (cbytes_t) rec->adn.number;
     int       len;
 
     if (number[0] == '+') {
         ton     = 0x91;
         number += 1;
     }
-    footer[0] = (strlen(number)+1)/2 + 1;
+    footer[0] = (strlen((const char*) number)+1)/2 + 1;
     return 0;
 }

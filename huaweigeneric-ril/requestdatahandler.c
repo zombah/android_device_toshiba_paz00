@@ -43,6 +43,9 @@ static void *dummyDispatch(void *data, size_t datalen);
 #define dispatchCdmaSmsAck dummyDispatch
 #define dispatchCdmaBrSmsCnf dummyDispatch
 #define dispatchRilCdmaSmsWriteArgs dummyDispatch
+#define dispatchCdmaSubscriptionSource dummyDispatch
+#define dispatchVoiceRadioTech dummyDispatch
+
 
 static void *dispatchCallForward(void *data, size_t datalen);
 static void *dispatchDial(void *data, size_t datalen);

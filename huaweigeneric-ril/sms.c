@@ -121,7 +121,7 @@ void decode_bearer_data(char *msg, int length, char *message, int *is_vm)
                     *message++=getbits(msg+i*2+6,13+16*j,8);
             } else {
                 strcpy(message,"bad SMS encoding");
-                LOGE("Bad encoding: %d",encoding);
+		      	ALOGE("Bad encoding: %d",encoding);
                 message+=16;
             }
             *message=0;
@@ -193,7 +193,7 @@ void encode_cdma_sms(char *pdu, char *to, char *message)
 {
     int length;
 
-    LOGE_IF(strlen(message)>160, "Error: Message String too long");
+    ALOGE_IF(strlen(message)>160, "Error: Message String too long");
     memset(pdu, '0', 512);
     setbits(pdu,0,16,0);
     setbits(pdu,16,24,0x021002);
@@ -206,7 +206,7 @@ void encode_cdma_sms(char *pdu, char *to, char *message)
     pdu=pdu+6;
     setbits(pdu,0,8,0x08);
     length=encode_bearer_data(pdu+4, message);
-    LOGE_IF(length>255, "Error: Message Hex too long");
+    ALOGE_IF(length>255, "Error: Message Hex too long");
     setbits(pdu,8,8,length);
     pdu=pdu+length*2+4;
     *pdu=0;
@@ -222,7 +222,7 @@ char **cdma_to_gsmpdu(char *msg)
     int is_vm=0;
     decode_cdma_sms(msg,from,message,&is_vm);
     //  if(strlen(message)>=160) message[159]=0;
-    LOGD("CDMA Message:%s From:%s\n",message,from);
+    ALOGD("CDMA Message:%s From:%s\n",message,from);
     SmsAddressRec smsaddr;
     SmsTimeStampRec smstime;
     if (is_vm) {
@@ -260,14 +260,14 @@ char **cdma_to_gsmpdu(char *msg)
 char *gsm_to_cdmapdu(char *msg)
 {
     char to[256];
-    char message[256];
+	unsigned char message[256];
     static char hexpdu[512];
     SmsAddressRec smsaddr;
     sms_address_from_str(&smsaddr,"000000",6);
 
     SmsPDU pdu=smspdu_create_from_hex( msg, strlen(msg) );
     if (smspdu_get_receiver_address(pdu,&smsaddr)<0) {
-        LOGE("Error: no receiver address");
+        ALOGE("Error: no receiver address");
         smspdu_get_sender_address(pdu,&smsaddr);
     }
     sms_address_to_str(&smsaddr,to,256);
@@ -279,7 +279,7 @@ char *gsm_to_cdmapdu(char *msg)
     int length=smspdu_get_text_message(pdu, message, 256);
     message[length]=0;
     smspdu_free(pdu);
-    LOGD("GSM Message:%s To:%s\n",message,to);
+    ALOGD("GSM Message:%s To:%s\n",message,to);
     encode_cdma_sms(hexpdu,to,message);
     return hexpdu;
 }

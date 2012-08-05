@@ -119,9 +119,9 @@ static void ac_free(void)
     (void) pthread_once(&key_once, make_key);
     if ((ac = (struct atcontext *) pthread_getspecific(key)) != NULL) {
         free(ac);
-        LOGD("%s() freed current thread AT context", __func__);
+        ALOGD("%s() freed current thread AT context", __func__);
     } else {
-        LOGW("%s() No AT context exist for current thread, cannot free it",
+        ALOGW("%s() No AT context exist for current thread, cannot free it",
             __func__);
     }
 }
@@ -131,7 +131,7 @@ static int initializeAtContext(void)
     struct atcontext *ac = NULL;
 
     if (pthread_once(&key_once, make_key)) {
-        LOGE("%s() Pthread_once failed!", __func__);
+        ALOGE("%s() Pthread_once failed!", __func__);
         goto error;
     }
 
@@ -140,7 +140,7 @@ static int initializeAtContext(void)
     if (ac == NULL) {
         ac = (struct atcontext *) malloc(sizeof(struct atcontext));
         if (ac == NULL) {
-            LOGE("%s() Failed to allocate memory", __func__);
+            ALOGE("%s() Failed to allocate memory", __func__);
             goto error;
         }
 
@@ -152,7 +152,7 @@ static int initializeAtContext(void)
         ac->ATBufferCur = ac->ATBuffer;
 
         if (pipe(ac->readerCmdFds)) {
-            LOGE("%s() Failed to create pipe: %s", __func__, strerror(errno));
+            ALOGE("%s() Failed to create pipe: %s", __func__, strerror(errno));
             goto error;
         }
 
@@ -164,17 +164,17 @@ static int initializeAtContext(void)
         ac->timeoutMsec = DEFAULT_AT_TIMEOUT_MSEC;
 
         if (pthread_setspecific(key, ac)) {
-            LOGE("%s() Calling pthread_setspecific failed!", __func__);
+            ALOGE("%s() Calling pthread_setspecific failed!", __func__);
             goto error;
         }
     }
 
-    LOGI("Initialized new AT Context!");
+    ALOGI("Initialized new AT Context!");
 
     return 0;
 
 error:
-    LOGE("%s() Failed initializing new AT Context!", __func__);
+    ALOGE("%s() Failed initializing new AT Context!", __func__);
     free(ac);
     return -1;
 }
@@ -187,10 +187,10 @@ static struct atcontext *getAtContext(void)
 
     if ((ac = (struct atcontext *) pthread_getspecific(key)) == NULL) {
         if (s_defaultAtContext) {
-            LOGW("WARNING! external thread use default AT Context");
+            ALOGW("WARNING! external thread use default AT Context");
             ac = s_defaultAtContext;
         } else {
-            LOGE("WARNING! %s() called from external thread with "
+            ALOGE("WARNING! %s() called from external thread with "
                  "no defaultAtContext set!! This IS a bug! "
                  "A crash is probably nearby!", __func__);
         }
@@ -217,7 +217,7 @@ void  AT_DUMP(const char*  prefix, const char*  buff, int  len)
 {
     if (len < 0)
         len = strlen(buff);
-    LOGD("%.*s", len, buff);
+    ALOGD("%.*s", len, buff);
 }
 #endif
 
@@ -410,7 +410,7 @@ static void processLine(const char *line)
         break;
 
         default: /* This should never be reached */
-            LOGE("%s() Unsupported AT command type %d", __func__, ac->type);
+            ALOGE("%s() Unsupported AT command type %d", __func__, ac->type);
             handleUnsolicited(line);
         break;
     }
@@ -500,7 +500,7 @@ static const char *readline(void)
          * size argument below.
          */
         if (0 >= MAX_AT_RESPONSE - (p_read - ac->ATBuffer) - 2) {
-            LOGE("%s() ERROR: Input line exceeded buffer", __func__);
+            ALOGE("%s() ERROR: Input line exceeded buffer", __func__);
             /* Ditch buffer and start over again. */
             ac->ATBufferCur = ac->ATBuffer;
             *ac->ATBufferCur = '\0';
@@ -520,7 +520,7 @@ static const char *readline(void)
         err = poll(pfds, 2, -1);
 
         if (err < 0) {
-            LOGE("%s() poll: error: %s", __func__, strerror(errno));
+            ALOGE("%s() poll: error: %s", __func__, strerror(errno));
             return NULL;
         }
 
@@ -533,7 +533,7 @@ static const char *readline(void)
         }
 
         if (pfds[0].revents & POLLERR) {
-            LOGE("%s() POLLERR event! Returning...", __func__);
+            ALOGE("%s() POLLERR event! Returning...", __func__);
             return NULL;
         }
 
@@ -569,9 +569,9 @@ static const char *readline(void)
         } else if (count <= 0) {
             /* Read error encountered or EOF reached. */
             if (count == 0)
-                LOGD("%s() atchannel: EOF reached.", __func__);
+                ALOGD("%s() atchannel: EOF reached.", __func__);
             else
-                LOGD("%s() atchannel: read error %s", __func__, strerror(errno));
+                ALOGD("%s() atchannel: read error %s", __func__, strerror(errno));
 
             return NULL;
         }
@@ -588,7 +588,7 @@ static const char *readline(void)
     ac->ATBufferCur = p_eol + 1;     /* This will always be <= p_read,
                                         and there will be a \0 at *p_read. */
 
-    LOGI("AT(%d)< %s", ac->fd, ret);
+    ALOGI("AT(%d)< %s", ac->fd, ret);
     return ret;
 }
 
@@ -613,7 +613,7 @@ static void *readerLoop(void *arg)
 {
     struct atcontext *ac = NULL;
 
-    LOGI("Entering readerloop!");
+    ALOGI("Entering readerloop!");
 
     setAtContext((struct atcontext *) arg);
     ac = getAtContext();
@@ -650,7 +650,7 @@ static void *readerLoop(void *arg)
         }
 
     onReaderClosed();
-    LOGI("Exiting readerloop!");
+    ALOGI("Exiting readerloop!");
     return NULL;
 }
 
@@ -673,7 +673,7 @@ static int writeline (const char *s)
         return AT_ERROR_CHANNEL_CLOSED;
     }
 
-    LOGD("AT(%d)> %s", ac->fd, s);
+    ALOGD("AT(%d)> %s", ac->fd, s);
 
     AT_DUMP( ">> ", s, strlen(s) );
 
@@ -714,7 +714,7 @@ static int writeCtrlZ (const char *s)
     if (ac->fd < 0 || ac->readerClosed > 0)
         return AT_ERROR_CHANNEL_CLOSED;
 
-    LOGD("AT> %s^Z\n", s);
+    ALOGD("AT> %s^Z\n", s);
 
     AT_DUMP( ">* ", s, strlen(s) );
 
@@ -824,7 +824,7 @@ int at_open(int fd, ATUnsolHandler h)
     struct atcontext *ac = NULL;
 
     if (initializeAtContext()) {
-        LOGE("%s() InitializeAtContext failed!", __func__);
+        ALOGE("%s() InitializeAtContext failed!", __func__);
         goto error;
     }
 
@@ -863,7 +863,7 @@ void at_close(void)
 
     if (ac->fd >= 0) {
         if (close(ac->fd) != 0)
-            LOGE("%s() FAILED to close fd %d!", __func__, ac->fd);
+            ALOGE("%s() FAILED to close fd %d!", __func__, ac->fd);
     }
     ac->fd = -1;
 
@@ -1077,7 +1077,7 @@ int at_send_command (const char *command, ...)
     va_end(ap);
 
     if (err != AT_NOERROR)
-        LOGI(" --- %s", at_str_err(-err));
+        ALOGI(" --- %s", at_str_err(-err));
 
     return -err;
 }
@@ -1096,7 +1096,7 @@ int at_send_command_raw (const char *command, ATResponse **pp_outResponse)
      */
 
     if (err != AT_NOERROR)
-        LOGI(" --- %s", at_str_err(-err));
+        ALOGI(" --- %s", at_str_err(-err));
 
     return -err;
 }
@@ -1130,7 +1130,7 @@ int at_send_command_singleline (const char *command,
     va_end(ap);
 
     if (err != AT_NOERROR)
-        LOGI(" --- %s", at_str_err(-err));
+        ALOGI(" --- %s", at_str_err(-err));
 
     return -err;
 }
@@ -1159,7 +1159,7 @@ int at_send_command_numeric (const char *command,
     }
 
     if (err != AT_NOERROR)
-        LOGI(" --- %s", at_str_err(-err));
+        ALOGI(" --- %s", at_str_err(-err));
 
     return -err;
 }
@@ -1191,7 +1191,7 @@ int at_send_command_sms (const char *command,
     }
 
     if (err != AT_NOERROR)
-        LOGI(" --- %s", at_str_err(-err));
+        ALOGI(" --- %s", at_str_err(-err));
 
     return -err;
 }
@@ -1219,7 +1219,7 @@ int at_send_command_multiline (const char *command,
     }
 
     if (err != AT_NOERROR)
-        LOGI(" --- %s", at_str_err(-err));
+        ALOGI(" --- %s", at_str_err(-err));
 
     return -err;
 }
@@ -1287,7 +1287,7 @@ int at_handshake(void)
     if (err == 0) {
         /* Pause for a bit to let the input buffer drain any unmatched OK's
            (they will appear as extraneous unsolicited responses). */
-        LOGD("%s() pausing %d ms to drain unmatched OK's...",
+        ALOGD("%s() pausing %d ms to drain unmatched OK's...",
              __func__, HANDSHAKE_TIMEOUT_MSEC);
         sleepMsec(HANDSHAKE_TIMEOUT_MSEC);
     }
