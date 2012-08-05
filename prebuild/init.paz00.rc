@@ -17,6 +17,11 @@ on early-init
 
 on fs
     mount_all /fstab.paz00
+#    mount ext4 /dev/block/mmcblk0p3 /system wait rw
+#    mount ext4 /dev/block/mmcblk0p3 /system wait ro remount
+#    mount ext4 /dev/block/mmcblk0p4 /cache wait noatime
+#    mount ext4 /dev/block/mmcblk0p5 /misc nosuid nodev
+#    mount ext4 /dev/block/mmcblk0p6 /data wait noatime
 
 # Dunno needed in jb or not    
 #    chmod 4755 /system/bin/pppd
