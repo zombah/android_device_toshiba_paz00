@@ -52,7 +52,7 @@ BOARD_HAVE_BLUETOOTH 			:= true
 BOARD_HAVE_BLUETOOTH_BCM 		:= true
 #BOARD_HAVE_BLUETOOTH_CSR 		:= true
 
-BOARD_KERNEL_CMDLINE 			:= mem=512M@0 panic=10 video=tegrafb console=tty0 console=ttyS0,115200n8 no_console_suspend=1 tegraboot=sdmmc androidboot.hardware=paz00 tegrapart=recovery:300:a00:800,boot:d00:1000:800,mbr:1d00:200:800,system:1f00:25800:800,cache:27700:32000:800,misc:59700:400:800,store:59c00:9a600:800,userdata:f4300:df3500:800
+BOARD_KERNEL_CMDLINE 			:= mem=512M@0 panic=10 video=tegrafb console=tty0 console=ttyS0,115200n8 no_console_suspend=1 tegraboot=sdmmc androidboot.hardware=paz00 tegrapart=recovery:300:a00:800,boot:d00:1000:800,mbr:1d00:200:800
 
 BOARD_KERNEL_BASE 			:= 0x10000000
 BOARD_PAGE_SIZE 			:= 0x00000800
@@ -62,7 +62,7 @@ BOARD_USES_ALSA_AUDIO			:= false
 BUILD_WITH_ALSA_UTILS			:= false
 BOARD_USES_GENERIC_AUDIO 		:= true
 BOARD_USES_AUDIO_LEGACY 		:= false
-TARGET_USES_OLD_LIBSENSORS_HAL 		:= true
+TARGET_USES_OLD_LIBSENSORS_HAL 		:= false
 
 BOARD_EGL_CFG 				:= device/toshiba/paz00/prebuild/egl.cfg
 TARGET_OTA_ASSERT_DEVICE 		:= paz00,ac100,GT-P7510
@@ -112,7 +112,7 @@ BOARD_HAVE_GPS				:= false
 #PRODUCT_CHARACTERISTICS		 := tablet
 BOARD_USES_SECURE_SERVICES		:= true
 BOARD_SKIP_ANDROID_DOC_BUILD		:= true
-TARGET_HAS_THIRD_PARTY_APPS		:= true
+TARGET_HAS_THIRD_PARTY_APPS		:= false
 
 # libsensor from android-x86
 BOARD_USES_KBDSENSOR 			:= false
