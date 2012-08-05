@@ -86,8 +86,11 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/ppp/ip-up:/system/etc/ppp/ip-up \
     $(LOCAL_PATH)/ppp/ip-down:/system/etc/ppp/ip-down
 
+# Fs utils
 PRODUCT_PACKAGES := \
     make_ext4fs \
+    setup_fs \
+    e2fsck \
     com.android.future.usb.accessory \
     hwprops
 
@@ -132,10 +135,6 @@ PRODUCT_PACKAGES += \
     FolioParts \
     wmiconfig
 
-# Filesystem management tools
-PRODUCT_PACKAGES += \
-    make_ext4fs
-
 # Force rotation to landscape, not clean solution
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     ro.sf.hwrotation=270 \
@@ -153,7 +152,7 @@ PRODUCT_PACKAGES += \
     VideoChatCameraTestApp \
     RpcPerformance \
     procstatlog \
-    alsamixer 
+    vim
 
 $(call inherit-product-if-exists, vendor/toshiba/paz00/device-vendor.mk)
 $(call inherit-product, frameworks/native/build/phone-hdpi-512-dalvik-heap.mk)
