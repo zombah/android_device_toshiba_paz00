@@ -135,11 +135,6 @@ PRODUCT_PACKAGES += \
     FolioParts \
     wmiconfig
 
-# Force rotation to landscape, not clean solution
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    ro.sf.hwrotation=270 \
-    ro.sf.fakerotation=true
-
 # Enable logcat logging into file
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     debug.logcat=0
@@ -152,7 +147,7 @@ PRODUCT_PACKAGES += \
     VideoChatCameraTestApp \
     RpcPerformance \
     procstatlog \
-    vim
+    vim 
 
 $(call inherit-product-if-exists, vendor/toshiba/paz00/device-vendor.mk)
 $(call inherit-product, frameworks/native/build/phone-hdpi-512-dalvik-heap.mk)
