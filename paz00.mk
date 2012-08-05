@@ -43,56 +43,54 @@ PRODUCT_COPY_FILES += \
 # Keychars
 # Keylayout
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/keymaps/cpcap-key.kcm:system/usr/keychars/cpcap-key.kcm \
-    $(LOCAL_PATH)/keymaps/gpio-keys.kcm:system/usr/keychars/gpio-keys.kcm \
-    $(LOCAL_PATH)/keymaps/nvec_cir.kcm:system/usr/keychars/nvec_cir.kcm \
-    $(LOCAL_PATH)/keymaps/nvec_keyboard.kcm:system/usr/keychars/nvec_keyboard.kcm \
-    $(LOCAL_PATH)/keymaps/tegra-kbc.kcm:system/usr/keychars/tegra-kbc.kcm \
-    $(LOCAL_PATH)/keymaps/cpcap-key.kl:system/usr/keylayout/cpcap-key.kl \
-    $(LOCAL_PATH)/keymaps/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
-    $(LOCAL_PATH)/keymaps/nvec_cir.kl:system/usr/keylayout/nvec_cir.kl \
-    $(LOCAL_PATH)/keymaps/nvec_keyboard.kl:system/usr/keylayout/nvec_keyboard.kl \
-    $(LOCAL_PATH)/keymaps/tegra-kbc.kl:system/usr/keylayout/tegra-kbc.kl 
+    device/toshiba/paz00/keymaps/cpcap-key.kcm:system/usr/keychars/cpcap-key.kcm \
+    device/toshiba/paz00/keymaps/gpio-keys.kcm:system/usr/keychars/gpio-keys.kcm \
+    device/toshiba/paz00/keymaps/nvec_cir.kcm:system/usr/keychars/nvec_cir.kcm \
+    device/toshiba/paz00/keymaps/nvec_keyboard.kcm:system/usr/keychars/nvec_keyboard.kcm \
+    device/toshiba/paz00/keymaps/tegra-kbc.kcm:system/usr/keychars/tegra-kbc.kcm \
+    device/toshiba/paz00/keymaps/cpcap-key.kl:system/usr/keylayout/cpcap-key.kl \
+    device/toshiba/paz00/keymaps/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
+    device/toshiba/paz00/keymaps/nvec_cir.kl:system/usr/keylayout/nvec_cir.kl \
+    device/toshiba/paz00/keymaps/nvec_keyboard.kl:system/usr/keylayout/nvec_keyboard.kl \
+    device/toshiba/paz00/keymaps/tegra-kbc.kl:system/usr/keylayout/tegra-kbc.kl 
 
 # Vold
 PRODUCT_COPY_FILES += \
-        $(LOCAL_PATH)/prebuild/vold.fstab:system/etc/vold.fstab
+    device/toshiba/paz00/prebuild/vold.fstab:system/etc/vold.fstab
 
 
 # WiFi/BT Firmware
 PRODUCT_COPY_FILES += \
-        $(LOCAL_PATH)/prebuild/firmware/rt2870.bin:system/vendor/firmware/rt2870.bin
-
-
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
-    $(LOCAL_PATH)/wifi/hostapd.conf:system/etc/wifi/hostapd.conf
+    device/toshiba/paz00/prebuild/firmware/rt2870.bin:system/vendor/firmware/rt2870.bin \
+    device/toshiba/paz00/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
+    device/toshiba/paz00/wifi/hostapd.conf:system/etc/wifi/hostapd.conf
 
 # Some files for 3G
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/ppp/ip-up:/system/etc/ppp/ip-up \
-    $(LOCAL_PATH)/ppp/ip-down:/system/etc/ppp/ip-down
+    device/toshiba/paz00/ppp/ip-up:/system/etc/ppp/ip-up \
+    device/toshiba/paz00/ppp/ip-down:/system/etc/ppp/ip-down
 
+# Alsa config files
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuild/asound.conf:/system/etc/asound.conf \
-    $(LOCAL_PATH)/prebuild/libasound.so:/system/lib/libasound.so \
-    $(LOCAL_PATH)/alsa/alsa.conf:/system/usr/share/alsa/alsa.conf \
-    $(LOCAL_PATH)/alsa/cards/aliases.conf:/system/usr/share/alsa/cards/aliases.conf \
-    $(LOCAL_PATH)/alsa/pcm/modem.conf:/system/usr/share/alsa/pcm/modem.conf \
-    $(LOCAL_PATH)/alsa/pcm/iec958.conf:/system/usr/share/alsa/pcm/iec958.conf \
-    $(LOCAL_PATH)/alsa/pcm/dpl.conf:/system/usr/share/alsa/pcm/dpl.conf \
-    $(LOCAL_PATH)/alsa/pcm/surround50.conf:/system/usr/share/alsa/pcm/surround50.conf \
-    $(LOCAL_PATH)/alsa/pcm/center_lfe.conf:/system/usr/share/alsa/pcm/center_lfe.conf \
-    $(LOCAL_PATH)/alsa/pcm/surround51.conf:/system/usr/share/alsa/pcm/surround51.conf \
-    $(LOCAL_PATH)/alsa/pcm/dsnoop.conf:/system/usr/share/alsa/pcm/dsnoop.conf \
-    $(LOCAL_PATH)/alsa/pcm/side.conf:/system/usr/share/alsa/pcm/side.conf \
-    $(LOCAL_PATH)/alsa/pcm/dmix.conf:/system/usr/share/alsa/pcm/dmix.conf \
-    $(LOCAL_PATH)/alsa/pcm/default.conf:/system/usr/share/alsa/pcm/default.conf \
-    $(LOCAL_PATH)/alsa/pcm/surround40.conf:/system/usr/share/alsa/pcm/surround40.conf \
-    $(LOCAL_PATH)/alsa/pcm/surround41.conf:/system/usr/share/alsa/pcm/surround41.conf \
-    $(LOCAL_PATH)/alsa/pcm/front.conf:/system/usr/share/alsa/pcm/front.conf \
-    $(LOCAL_PATH)/alsa/pcm/rear.conf:/system/usr/share/alsa/pcm/rear.conf \
-    $(LOCAL_PATH)/alsa/pcm/surround71.conf:/system/usr/share/alsa/pcm/surround71.conf
+    device/toshiba/paz00/prebuild/asound.conf:/system/etc/asound.conf \
+    device/toshiba/paz00/prebuild/libasound.so:/system/lib/libasound.so \
+    device/toshiba/paz00/alsa/alsa.conf:/system/usr/share/alsa/alsa.conf \
+    device/toshiba/paz00/alsa/cards/aliases.conf:/system/usr/share/alsa/cards/aliases.conf \
+    device/toshiba/paz00/alsa/pcm/modem.conf:/system/usr/share/alsa/pcm/modem.conf \
+    device/toshiba/paz00/alsa/pcm/iec958.conf:/system/usr/share/alsa/pcm/iec958.conf \
+    device/toshiba/paz00/alsa/pcm/dpl.conf:/system/usr/share/alsa/pcm/dpl.conf \
+    device/toshiba/paz00/alsa/pcm/surround50.conf:/system/usr/share/alsa/pcm/surround50.conf \
+    device/toshiba/paz00/alsa/pcm/center_lfe.conf:/system/usr/share/alsa/pcm/center_lfe.conf \
+    device/toshiba/paz00/alsa/pcm/surround51.conf:/system/usr/share/alsa/pcm/surround51.conf \
+    device/toshiba/paz00/alsa/pcm/dsnoop.conf:/system/usr/share/alsa/pcm/dsnoop.conf \
+    device/toshiba/paz00/alsa/pcm/side.conf:/system/usr/share/alsa/pcm/side.conf \
+    device/toshiba/paz00/alsa/pcm/dmix.conf:/system/usr/share/alsa/pcm/dmix.conf \
+    device/toshiba/paz00/alsa/pcm/default.conf:/system/usr/share/alsa/pcm/default.conf \
+    device/toshiba/paz00/alsa/pcm/surround40.conf:/system/usr/share/alsa/pcm/surround40.conf \
+    device/toshiba/paz00/alsa/pcm/surround41.conf:/system/usr/share/alsa/pcm/surround41.conf \
+    device/toshiba/paz00/alsa/pcm/front.conf:/system/usr/share/alsa/pcm/front.conf \
+    device/toshiba/paz00/alsa/pcm/rear.conf:/system/usr/share/alsa/pcm/rear.conf \
+    device/toshiba/paz00/alsa/pcm/surround71.conf:/system/usr/share/alsa/pcm/surround71.conf
 
 PRODUCT_PACKAGES := \
     make_ext4fs \
@@ -133,7 +131,6 @@ PRODUCT_PACKAGES += \
     tinyplay \
     tinycap \
     tinymix \
-    libhuaweigeneric-ril \
     audio.primary.tegra \
     audio.a2dp.default \
     FolioParts \
@@ -144,20 +141,21 @@ PRODUCT_PACKAGES += \
     make_ext4fs
 
 # Force rotation to landscape, not clean solution
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    ro.sf.hwrotation=270 \
-    ro.sf.fakerotation=true
+#PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+#    ro.sf.hwrotation=270 \
+#    ro.sf.fakerotation=true
 
 # Extra apps
 PRODUCT_PACKAGES += \
+    libhuaweigeneric-ril \
+    libmbm-ril \
     FileManager \
     dropbear \
-    libmbm-ril \
     VideoChatCameraTestApp \
     RpcPerformance \
     procstatlog \
-    sensors.tegra 
+    sensors.tegra \
+    hciattach 
 
 $(call inherit-product-if-exists, vendor/toshiba/paz00/device-vendor.mk)
 $(call inherit-product, frameworks/base/build/phone-hdpi-512-dalvik-heap.mk)
-

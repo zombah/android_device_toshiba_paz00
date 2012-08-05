@@ -60,6 +60,7 @@ on fs
 # install tun for vpns
     insmod /system/lib/modules/tun.ko
 # install ppp modules
+    insmod /system/lib/modules/slhc.ko
     insmod /system/lib/modules/ppp_generic.ko
     insmod /system/lib/modules/ppp_async.ko
     insmod /system/lib/modules/ppp_deflate.ko
@@ -67,6 +68,7 @@ on fs
 # install additional modules
     insmod /system/lib/modules/lm90.ko
     insmod /system/lib/modules/tegra_wdt.ko
+    insmod /system/lib/modules/fuse.ko
 
 on post-fs-data
     mkdir /data/misc/wifi 0770 wifi wifi
@@ -80,9 +82,6 @@ on post-fs-data
 
     # Set indication (checked by vold) that we have finished this action
     setprop vold.post_fs_data_done 1
-
-    # Mount debugfs
-    mount debugfs dbg /data/dbg
 
 on boot
 # bluetooth
@@ -119,30 +118,13 @@ on boot
     chmod 664 /sys/bus/i2c/drivers/mm_ak8975/0-000c/mode
     chmod 664 /sys/bus/i2c/drivers/mm_ak8975/0-000c/show_flux
 
-# zombah old ones
-    # nvrm permissions
-    chmod 666 /dev/nvrm
-    chmod 660 /dev/knvrm
-    chown root system /dev/knvrm
-    chmod 666 /dev/nvrpc
-    chmod 666 /dev/nvmap
-    chmod 666 /dev/nvos
-    chmod 666 /dev/nvec
-    chmod 666 /dev/lsm303dlh_acc
-    chmod 666 /dev/akm8975_aot
-    chmod 666 /dev/akm8975_dev
-    # i2c-interface permissions        
-    chmod 666 /dev/i2c-0
-    chmod 666 /dev/i2c-1
-    chmod 666 /dev/i2c-3
-
-#zombah mbm-ril
-    write /sys/bus/usb/devices/1-1/power/autosuspend 2
-    write /sys/bus/usb/devices/1-1/power/control auto
-    write /sys/bus/usb/devices/1-1/power/wakeup enabled
-    write /sys/bus/usb/devices/2-1/power/autosuspend 2
-    write /sys/bus/usb/devices/2-1/power/control auto
-    write /sys/bus/usb/devices/2-1/power/wakeup enabled
+# mbm-ril
+#    write /sys/bus/usb/devices/1-1/power/autosuspend 2
+#    write /sys/bus/usb/devices/1-1/power/control auto
+#    write /sys/bus/usb/devices/1-1/power/wakeup enabled
+#    write /sys/bus/usb/devices/2-1/power/autosuspend 2
+#    write /sys/bus/usb/devices/2-1/power/control auto
+#    write /sys/bus/usb/devices/2-1/power/wakeup enabled
     symlink /dev/bus/usb/002/049 /dev/cdc-wdm0
     symlink /dev/bus/usb/002/050 /dev/cdc-wdm1
     chown system system /dev/cdc-wdm0
@@ -205,10 +187,10 @@ service iprenew_wlan0 /system/bin/dhcpcd -n
 #    class late_start
 
 # Start GPS daemon
-service gps-daemon /system/bin/glgps_nvidiaTegra2android -c /system/etc/gps/gpsconfig.xml
-    class late_start
-    user root
-    group root
+#service gps-daemon /system/bin/glgps_nvidiaTegra2android -c /system/etc/gps/gpsconfig.xml
+#    class late_start
+#    user root
+#    group root
 
 #Prepare TF service
 service tf_daemon /system/bin/tf_daemon -storageDir /data/tf
@@ -236,9 +218,9 @@ on property:init.svc.bootanim=stopped
     start picasso_postboot
 
 # cmd_server service
-service cmd_server /system/bin/cmd_server_daemon
-    class late_start
-    user root
+#service cmd_server /system/bin/cmd_server_daemon
+#    class late_start
+#    user root
 
 # Enable tcpdump-service
 service netdump-service /system/xbin/tcpdump -i any -C 5 -p -s 0 -w /sdcard/netdump.cap
