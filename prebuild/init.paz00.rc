@@ -16,6 +16,8 @@ on early-init
     symlink /storage/sdcard0 /mnt/sdcard
 
 on fs
+    setprop ro.crypto.tmpfs_options size=128m,mode=0771,uid=1000,gid=1000
+    mount ext4 /dev/block/mmcblk0p6 /data wait noatime nosuid nodev
     mount_all /fstab.paz00
 #    mount ext4 /dev/block/mmcblk0p3 /system wait rw
 #    mount ext4 /dev/block/mmcblk0p3 /system wait ro remount
@@ -24,9 +26,8 @@ on fs
 #    mount ext4 /dev/block/mmcblk0p6 /data wait noatime
 
 # Dunno needed in jb or not    
-#    chmod 4755 /system/bin/pppd
-#    setprop ro.crypto.tmpfs_options size=128m,mode=0771,uid=1000,gid=1000
-#    mkdir /flexrom 0770 root system
+    chmod 4755 /system/bin/pppd
+    mkdir /flexrom 0770 root system
 
 # Basic modules loading below
 # install wifi modules
